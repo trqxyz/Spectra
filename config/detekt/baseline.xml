@@ -1,0 +1,301 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexCondition:MonitorCommand.kt$MonitorCommand$kotlin.math.abs(probability - session.lastProbability) &lt; 0.0001 &amp;&amp; kotlin.math.abs(buffer - session.lastBuffer) &lt; 0.01 &amp;&amp; ping == session.lastPing &amp;&amp; kotlin.math.abs(dmgMultiplier - session.lastDmgMultiplier) &lt; 0.0001 &amp;&amp; kotlin.math.abs(trend - session.lastTrend) &lt; 0.0001 &amp;&amp; settingsHash == session.lastSettingsHash &amp;&amp; session.lastSentComponent != null</ID>
+    <ID>ComplexCondition:MonitorCommand.kt$MonitorCommand$onlineViewer == null || !onlineViewer.isOnline || onlineTarget == null || !onlineTarget.isOnline</ID>
+    <ID>CyclomaticComplexMethod:AiCheck.kt$AiCheck$private fun onResponse(parsed: AiResult)</ID>
+    <ID>CyclomaticComplexMethod:JacksonAiResponseParser.kt$JacksonAiResponseParser$private fun parseDecision(node: JsonNode, label: String): AIModelDecision</ID>
+    <ID>CyclomaticComplexMethod:MonitorCommand.kt$MonitorCommand$private fun buildPart( part: String, viewer: Player, target: Player, probability: Double, buffer: Double, ping: Int, dmgMultiplier: Double, trend: Double, settings: MonitorSettings, ): Component?</ID>
+    <ID>CyclomaticComplexMethod:PacketListener.kt$PacketListener$override fun onPacketSend(event: PacketSendEvent)</ID>
+    <ID>CyclomaticComplexMethod:PacketListener.kt$PacketListener$private fun checkTeleportQueue( player: SpectraPlayer, flying: WrapperPlayClientPlayerFlying, ): Boolean</ID>
+    <ID>FunctionNaming:TickData.kt$TickData$fun __assign(_i: Int, _bb: ByteBuffer): TickData</ID>
+    <ID>FunctionNaming:TickData.kt$TickData$fun __init(_i: Int, _bb: ByteBuffer)</ID>
+    <ID>FunctionNaming:TickData.kt$TickData.Companion$@JvmStatic fun ValidateVersion()</ID>
+    <ID>FunctionNaming:TickData.kt$TickData.Vector$fun __assign(_vector: Int, _elementSize: Int, _bb: ByteBuffer): Vector</ID>
+    <ID>FunctionNaming:TickDataSequence.kt$TickDataSequence$fun __assign(_i: Int, _bb: ByteBuffer): TickDataSequence</ID>
+    <ID>FunctionNaming:TickDataSequence.kt$TickDataSequence$fun __init(_i: Int, _bb: ByteBuffer)</ID>
+    <ID>FunctionNaming:TickDataSequence.kt$TickDataSequence.Companion$@JvmStatic fun ValidateVersion()</ID>
+    <ID>FunctionNaming:TickDataSequence.kt$TickDataSequence.Vector$fun __assign(_vector: Int, _elementSize: Int, _bb: ByteBuffer): Vector</ID>
+    <ID>FunctionParameterNaming:TickData.kt$TickData$_bb: ByteBuffer</ID>
+    <ID>FunctionParameterNaming:TickData.kt$TickData$_i: Int</ID>
+    <ID>FunctionParameterNaming:TickData.kt$TickData.Companion$_bb: ByteBuffer</ID>
+    <ID>FunctionParameterNaming:TickData.kt$TickData.Vector$_bb: ByteBuffer</ID>
+    <ID>FunctionParameterNaming:TickData.kt$TickData.Vector$_elementSize: Int</ID>
+    <ID>FunctionParameterNaming:TickData.kt$TickData.Vector$_vector: Int</ID>
+    <ID>FunctionParameterNaming:TickDataSequence.kt$TickDataSequence$_bb: ByteBuffer</ID>
+    <ID>FunctionParameterNaming:TickDataSequence.kt$TickDataSequence$_i: Int</ID>
+    <ID>FunctionParameterNaming:TickDataSequence.kt$TickDataSequence.Companion$_bb: ByteBuffer</ID>
+    <ID>FunctionParameterNaming:TickDataSequence.kt$TickDataSequence.Vector$_bb: ByteBuffer</ID>
+    <ID>FunctionParameterNaming:TickDataSequence.kt$TickDataSequence.Vector$_elementSize: Int</ID>
+    <ID>FunctionParameterNaming:TickDataSequence.kt$TickDataSequence.Vector$_vector: Int</ID>
+    <ID>ImplicitDefaultLocale:DataSession.kt$DataSession$String.format("%s_%s_%s.csv", statusForFilename, player, timestamp)</ID>
+    <ID>ImplicitDefaultLocale:ProfileCommand.kt$ProfileCommand$String.format("%.2f", aiCheck.buffer)</ID>
+    <ID>ImplicitDefaultLocale:ProfileCommand.kt$ProfileCommand$String.format("%.2f", aimProcessor.sensitivityX * 200)</ID>
+    <ID>ImplicitDefaultLocale:ProfileCommand.kt$ProfileCommand$String.format("%.2f", aimProcessor.sensitivityY * 200)</ID>
+    <ID>LargeClass:MonitorCommand.kt$MonitorCommand : SpectraCommandListener</ID>
+    <ID>LongMethod:AiCheck.kt$AiCheck$private fun onResponse(parsed: AiResult)</ID>
+    <ID>LongMethod:AiCheckRidingExemptionTest.kt$AiCheckRidingExemptionTest$private fun createFixture(riding: Boolean): Fixture</ID>
+    <ID>LongMethod:ConfigManager.kt$ConfigManager$@Synchronized fun applyRemoteConfig(root: JsonNode): Boolean</ID>
+    <ID>LongMethod:ConfigManager.kt$ConfigManager$private fun loadValues()</ID>
+    <ID>LongMethod:JacksonAiResponseParser.kt$JacksonAiResponseParser$private fun parseDecision(node: JsonNode, label: String): AIModelDecision</ID>
+    <ID>LongMethod:JacksonAiResponseParserTest.kt$JacksonAiResponseParserTest$@Test fun `parses complete primary and per-model decision contracts`()</ID>
+    <ID>LongMethod:MonitorCommand.kt$MonitorCommand$override fun register(manager: CommandManager&lt;Sender>)</ID>
+    <ID>LongMethod:MonitorCommand.kt$MonitorCommand$private fun buildPart( part: String, viewer: Player, target: Player, probability: Double, buffer: Double, ping: Int, dmgMultiplier: Double, trend: Double, settings: MonitorSettings, ): Component?</ID>
+    <ID>LongMethod:ReportCommand.kt$ReportCommand$private fun create(context: CommandContext&lt;Sender>)</ID>
+    <ID>LongMethod:SpectraKoinModules.kt$private fun coreModule(plugin: SpectraPlugin)</ID>
+    <ID>LongParameterList:AiCheck.kt$AiCheck$( spectraPlayer: SpectraPlayer, private val plugin: SpectraPlugin, private val aiService: AiService, private val configManager: ConfigManager, private val regionProvider: RegionProvider, private val alertManager: AlertManager, private val damageProcessor: DamageProcessor, private val debugManager: DebugManager, private val scheduler: SchedulerService, private val decisionHistory: AiDecisionHistory, private val remoteConfigService: RemoteConfigService, private val reportService: ReportService, )</ID>
+    <ID>LongParameterList:BanStatusBridge.kt$BanStatusBridge$( player: OfflinePlayer, playerName: String? = null, active: Boolean, provider: String, providerRef: String, startedAt: Long? = null, expiresAt: Long? = null, reason: String? = null, actor: String? = null, snapshotId: String? = null, occurredAt: Long = System.currentTimeMillis(), )</ID>
+    <ID>LongParameterList:EntityScheduler.kt$EntityScheduler$( entity: Entity, plugin: Plugin, task: Runnable, retired: Runnable?, initialDelayTicks: Long, periodTicks: Long, )</ID>
+    <ID>LongParameterList:MonitorCommand.kt$MonitorCommand$( part: String, viewer: Player, target: Player, probability: Double, buffer: Double, ping: Int, dmgMultiplier: Double, trend: Double, settings: MonitorSettings, )</ID>
+    <ID>LongParameterList:MonitorCommand.kt$MonitorCommand$( viewer: Player, target: Player, probability: Double, buffer: Double, ping: Int, dmgMultiplier: Double, trend: Double, settings: MonitorSettings, )</ID>
+    <ID>LongParameterList:PunishmentManager.kt$PunishmentManager$( group: PunishGroup, vl: Int, verbose: String, command: String, playerName: String, checkName: String, )</ID>
+    <ID>LongParameterList:PunishmentManager.kt$PunishmentManager$( group: PunishGroup, vl: Int, verbose: String, commands: List&lt;String>, playerName: String, checkName: String, )</ID>
+    <ID>LongParameterList:PunishmentManager.kt$PunishmentManager$( private val spectraPlayer: SpectraPlayer, private val plugin: SpectraPlugin, private val configManager: ConfigManager, databaseManager: DatabaseManager, private val alertManager: AlertManager, private val adventure: BukkitAudiences, private val scheduler: SchedulerService, private val coroutines: SpectraCoroutines, )</ID>
+    <ID>LongParameterList:RegionScheduler.kt$RegionScheduler$( plugin: Plugin, world: World, chunkX: Int, chunkZ: Int, task: Runnable, delayTicks: Long, )</ID>
+    <ID>LongParameterList:RegionScheduler.kt$RegionScheduler$( plugin: Plugin, world: World, chunkX: Int, chunkZ: Int, task: Runnable, initialDelayTicks: Long, periodTicks: Long, )</ID>
+    <ID>LongParameterList:RelationCollector.kt$RelationCollector$( private val plugin: SpectraPlugin, private val configManager: ConfigManager, private val eventStore: RelationEventStore, private val vault: VaultEconomyBridge, private val worldGuard: WorldGuardRelationProvider, private val banStatus: BanStatusBridge, private val credentialsStore: CredentialsStore, private val scheduler: SchedulerService, )</ID>
+    <ID>LongParameterList:TickData.kt$TickData$( val deltaYaw: Float, val deltaPitch: Float, val accelYaw: Float, val accelPitch: Float, val jerkYaw: Float, val jerkPitch: Float, val gcdErrorYaw: Float, val gcdErrorPitch: Float, )</ID>
+    <ID>LongParameterList:TickData.kt$TickData.Companion$( builder: FlatBufferBuilder, deltaYaw: Float, deltaPitch: Float, accelYaw: Float, accelPitch: Float, jerkPitch: Float, jerkYaw: Float, gcdErrorYaw: Float, gcdErrorPitch: Float, )</ID>
+    <ID>LoopWithTooManyJumpStatements:LatencyUtils.kt$LatencyUtils$while</ID>
+    <ID>LoopWithTooManyJumpStatements:PacketListener.kt$PacketListener$while</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer$200</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer$300</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer$403</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer$500</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.BAD_REQUEST$400</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.CHUNK_SEQUENCE_MISMATCH$409</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.Companion$400</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.Companion$500</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.INVALID_SEQUENCE$422</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.NETWORK_ERROR$2</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.NOT_FOUND$404</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.PARSE_ERROR$3</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.PAYLOAD_TOO_LARGE$413</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.RATE_LIMITED$429</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.SERVER_ERROR$500</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.SERVICE_UNAVAILABLE$503</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.SUCCESS$200</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.UNAUTHORIZED$403</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.UNKNOWN_ERROR$4</ID>
+    <ID>MagicNumber:AIServer.kt$AIServer.ResponseCode.WAITING$5</ID>
+    <ID>MagicNumber:AIServerProvider.kt$AIServerProvider$5</ID>
+    <ID>MagicNumber:AIServerProvider.kt$AIServerProvider$60</ID>
+    <ID>MagicNumber:AiCheck.kt$AiCheck$0.9</ID>
+    <ID>MagicNumber:AiRotationState.kt$AiRotationState$180.0f</ID>
+    <ID>MagicNumber:AiRotationState.kt$AiRotationState$360.0f</ID>
+    <ID>MagicNumber:AiRotationState.kt$AiRotationState$5</ID>
+    <ID>MagicNumber:AimProcessor.kt$AimProcessor$5</ID>
+    <ID>MagicNumber:AimProcessor.kt$AimProcessor.Companion$0.15F</ID>
+    <ID>MagicNumber:AimProcessor.kt$AimProcessor.Companion$0.2f</ID>
+    <ID>MagicNumber:AimProcessor.kt$AimProcessor.Companion$0.6f</ID>
+    <ID>MagicNumber:AimProcessor.kt$AimProcessor.Companion$8.0</ID>
+    <ID>MagicNumber:ApiCooldown.kt$ApiCooldown$1000</ID>
+    <ID>MagicNumber:BanStatusBridge.kt$BanStatusBridge$32</ID>
+    <ID>MagicNumber:ClientBrand.kt$ClientBrand$64</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$0.01</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$0.25</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$0.9</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$100</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$100.0</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$100000</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$10_000</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$20</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$2000.0</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$25.0</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$50.0</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$500</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$80</ID>
+    <ID>MagicNumber:ConfigManager.kt$ConfigManager$86400L</ID>
+    <ID>MagicNumber:DecisionsCommand.kt$DecisionsCommand$100.0</ID>
+    <ID>MagicNumber:FoliaRegionScheduler.kt$FoliaRegionScheduler$4</ID>
+    <ID>MagicNumber:HistoryCommand.kt$HistoryCommand$10</ID>
+    <ID>MagicNumber:LogsCommand.kt$LogsCommand$10</ID>
+    <ID>MagicNumber:MonitorCommand.kt$MonitorCommand$0.0001</ID>
+    <ID>MagicNumber:MonitorCommand.kt$MonitorCommand$0.01</ID>
+    <ID>MagicNumber:MonitorCommand.kt$MonitorCommand$100.0</ID>
+    <ID>MagicNumber:MonitorCommand.kt$MonitorCommand$12</ID>
+    <ID>MagicNumber:PacketListener.kt$PacketListener$1.0E-7</ID>
+    <ID>MagicNumber:PlatformScheduler.kt$PlatformScheduler.Companion$50</ID>
+    <ID>MagicNumber:PlatformScheduler.kt$PlatformScheduler.Companion$50L</ID>
+    <ID>MagicNumber:ProfileCommand.kt$ProfileCommand$200</ID>
+    <ID>MagicNumber:ProfileCommand.kt$ProfileCommand$50</ID>
+    <ID>MagicNumber:PunishmentManager.kt$PunishmentManager$20.0</ID>
+    <ID>MagicNumber:PunishmentManager.kt$PunishmentManager$50.0</ID>
+    <ID>MagicNumber:RelationCollector.kt$RelationCollector$0xff</ID>
+    <ID>MagicNumber:RelationCollector.kt$RelationCollector$3</ID>
+    <ID>MagicNumber:RelationCollector.kt$RelationCollector.&lt;no name provided>$0.75f</ID>
+    <ID>MagicNumber:RelationCollector.kt$RelationCollector.&lt;no name provided>$128</ID>
+    <ID>MagicNumber:RelationEventStore.kt$RelationEventStore$10</ID>
+    <ID>MagicNumber:RelationEventStore.kt$RelationEventStore$3</ID>
+    <ID>MagicNumber:RelationEventStore.kt$RelationEventStore$4</ID>
+    <ID>MagicNumber:RelationEventStore.kt$RelationEventStore$5</ID>
+    <ID>MagicNumber:RelationEventStore.kt$RelationEventStore$6</ID>
+    <ID>MagicNumber:RelationEventStore.kt$RelationEventStore$7</ID>
+    <ID>MagicNumber:RelationEventStore.kt$RelationEventStore$8</ID>
+    <ID>MagicNumber:RelationEventStore.kt$RelationEventStore$9</ID>
+    <ID>MagicNumber:RelationSyncService.kt$RelationSyncService$200</ID>
+    <ID>MagicNumber:RelationSyncService.kt$RelationSyncService$299</ID>
+    <ID>MagicNumber:RelationSyncService.kt$RelationSyncService$5000</ID>
+    <ID>MagicNumber:RemoteConfigService.kt$RemoteConfigService$200</ID>
+    <ID>MagicNumber:RemoteConfigService.kt$RemoteConfigService$299</ID>
+    <ID>MagicNumber:RemoteConfigService.kt$RemoteConfigService$5000</ID>
+    <ID>MagicNumber:ReportMenu.kt$ReportMenu$100.0</ID>
+    <ID>MagicNumber:ReportMenu.kt$ReportMenu$45</ID>
+    <ID>MagicNumber:ReportMenu.kt$ReportMenu$49</ID>
+    <ID>MagicNumber:ReportMenu.kt$ReportMenu$53</ID>
+    <ID>MagicNumber:ReportMenu.kt$ReportMenu$54</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$10</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$100.0</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$1000000</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$1000L</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$11</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$12</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$13</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$14</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$15</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$16</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$17</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$18</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$3</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$4</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$5</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$6</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$7</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$8</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$9</ID>
+    <ID>MagicNumber:ReportService.kt$ReportService$999L</ID>
+    <ID>MagicNumber:SpectraMath.kt$SpectraMath$0.15</ID>
+    <ID>MagicNumber:SpectraMath.kt$SpectraMath$1e-3</ID>
+    <ID>MagicNumber:SpectraMath.kt$SpectraMath$3</ID>
+    <ID>MagicNumber:SpectraMath.kt$SpectraMath$8</ID>
+    <ID>MagicNumber:SpectraPlayer.kt$SpectraPlayer$0.0002</ID>
+    <ID>MagicNumber:SpectraPlayer.kt$SpectraPlayer$0.03</ID>
+    <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.MonitorSettingsTable$16</ID>
+    <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.MonitorSettingsTable$36</ID>
+    <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.PlayerLogins$36</ID>
+    <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.Punishments$255</ID>
+    <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.Punishments$36</ID>
+    <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.ViolationSyncOutbox$255</ID>
+    <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.ViolationSyncOutbox$36</ID>
+    <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.ViolationSyncOutbox$64</ID>
+    <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.Violations$255</ID>
+    <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.Violations$36</ID>
+    <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.Violations$64</ID>
+    <ID>MagicNumber:TickData.kt$TickData$10</ID>
+    <ID>MagicNumber:TickData.kt$TickData$12</ID>
+    <ID>MagicNumber:TickData.kt$TickData$14</ID>
+    <ID>MagicNumber:TickData.kt$TickData$16</ID>
+    <ID>MagicNumber:TickData.kt$TickData$18</ID>
+    <ID>MagicNumber:TickData.kt$TickData$4</ID>
+    <ID>MagicNumber:TickData.kt$TickData$6</ID>
+    <ID>MagicNumber:TickData.kt$TickData$8</ID>
+    <ID>MagicNumber:TickData.kt$TickData.Companion$3</ID>
+    <ID>MagicNumber:TickData.kt$TickData.Companion$4</ID>
+    <ID>MagicNumber:TickData.kt$TickData.Companion$5</ID>
+    <ID>MagicNumber:TickData.kt$TickData.Companion$6</ID>
+    <ID>MagicNumber:TickData.kt$TickData.Companion$7</ID>
+    <ID>MagicNumber:TickData.kt$TickData.Companion$8</ID>
+    <ID>MagicNumber:TickDataSequence.kt$TickDataSequence$4</ID>
+    <ID>MagicNumber:TickDataSequence.kt$TickDataSequence.Companion$4</ID>
+    <ID>MagicNumber:TransactionTracker.kt$TransactionTracker$0x7FFF</ID>
+    <ID>MagicNumber:ViolationSyncService.kt$ViolationSyncService$200</ID>
+    <ID>MagicNumber:ViolationSyncService.kt$ViolationSyncService$299</ID>
+    <ID>MagicNumber:ViolationSyncService.kt$ViolationSyncService$5000</ID>
+    <ID>MaxLineLength:ReportMenu.kt$ReportMenu$"${ChatColor.GRAY}Accepted: ${yesNo(result.accepted)} · Actionable: ${yesNo(result.actionable)} · Status: ${result.status}"</ID>
+    <ID>MaxLineLength:ReportMenu.kt$ReportMenu$"${ChatColor.GRAY}Confidence: ${"%.1f".format(result.confidence * 100.0)}% · Novelty: ${"%.1f".format(result.novelty * 100.0)}% · Buffer: ${"%.2f".format(result.buffer)}"</ID>
+    <ID>MaxLineLength:ReportService.kt$ReportService$"INSERT INTO report_model_results (report_id, model, status, probability, verdict, accepted, actionable, confidence, novelty, buffer_value, model_version) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"</ID>
+    <ID>MaxLineLength:ReportService.kt$ReportService$"INSERT INTO reports (id, source, reporter_uuid, reporter_name, target_uuid, target_name, reason, created_at, status, handled_by, updated_at, model, probability, verdict, confidence, novelty, buffer_value, model_version) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"</ID>
+    <ID>MayBeConst:Sender.kt$Sender.Companion$@JvmField val CONSOLE_NAME: String = "Console"</ID>
+    <ID>NestedBlockDepth:RelationEventStore.kt$RelationEventStore$private fun persist(events: List&lt;RelationEvent>)</ID>
+    <ID>NestedBlockDepth:RemoteConfigService.kt$RemoteConfigService$fun refresh(force: Boolean = false): Boolean</ID>
+    <ID>NestedBlockDepth:ReportService.kt$ReportService$private fun latestByReporter(reporterId: UUID): PlayerReport?</ID>
+    <ID>NestedBlockDepth:ReportService.kt$ReportService$private fun mutate(id: Long, staffName: String, status: ReportStatus): ReportMutationResult</ID>
+    <ID>PrintStackTrace:CommandManager.kt$CommandManager$e</ID>
+    <ID>PrintStackTrace:LatencyUtils.kt$LatencyUtils$ex</ID>
+    <ID>ReturnCount:AiApiImpl.kt$AiApiImpl$override fun getSnapshot(playerId: UUID): Optional&lt;AiSnapshot></ID>
+    <ID>ReturnCount:AiCheck.kt$AiCheck$override fun onPacketReceive(event: PacketReceiveEvent)</ID>
+    <ID>ReturnCount:AiCheck.kt$AiCheck$private fun onError(error: Throwable): Void?</ID>
+    <ID>ReturnCount:AiCheck.kt$AiCheck$private fun onResponse(parsed: AiResult)</ID>
+    <ID>ReturnCount:BanStatusBridge.kt$BanStatusBridge$private fun acceptLiteBansEntry(entry: Entry, active: Boolean)</ID>
+    <ID>ReturnCount:CheckApiImpl.kt$CheckApiImpl$override fun getCheck(playerId: UUID, checkName: String): Optional&lt;CheckInfo></ID>
+    <ID>ReturnCount:DataCollectorCheck.kt$DataCollectorCheck$override fun onPacketReceive(event: PacketReceiveEvent)</ID>
+    <ID>ReturnCount:ExemptManager.kt$ExemptManager$fun isExempt(player: Player?): Boolean</ID>
+    <ID>ReturnCount:JacksonAiResponseParser.kt$JacksonAiResponseParser$private fun parseDecision(node: JsonNode, label: String): AIModelDecision</ID>
+    <ID>ReturnCount:MonitorApiImpl.kt$MonitorApiImpl$override fun getSnapshot(playerId: UUID): Optional&lt;MonitorSnapshot></ID>
+    <ID>ReturnCount:MonitorCommand.kt$MonitorCommand$private fun parseToggle(raw: String?): Boolean?</ID>
+    <ID>ReturnCount:PacketListener.kt$PacketListener$override fun onPacketReceive(event: PacketReceiveEvent)</ID>
+    <ID>ReturnCount:PacketListener.kt$PacketListener$private fun checkRotationQueue( player: SpectraPlayer, flying: WrapperPlayClientPlayerFlying, ): Boolean</ID>
+    <ID>ReturnCount:PacketListener.kt$PacketListener$private fun checkTeleportQueue( player: SpectraPlayer, flying: WrapperPlayClientPlayerFlying, ): Boolean</ID>
+    <ID>ReturnCount:PacketListener.kt$PacketListener$private fun handleTransaction(event: PacketReceiveEvent, spectraPlayer: SpectraPlayer): Boolean</ID>
+    <ID>ReturnCount:PunishmentManager.kt$PunishmentManager$private suspend fun executeCommand( group: PunishGroup, vl: Int, verbose: String, command: String, playerName: String, checkName: String, )</ID>
+    <ID>ReturnCount:RelationCollector.kt$RelationCollector$@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true) fun onClose(event: InventoryCloseEvent)</ID>
+    <ID>ReturnCount:RelationCollector.kt$RelationCollector$@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true) fun onCommand(event: PlayerCommandPreprocessEvent)</ID>
+    <ID>ReturnCount:RelationCollector.kt$RelationCollector$@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true) fun onOpen(event: InventoryOpenEvent)</ID>
+    <ID>ReturnCount:RelationCollector.kt$RelationCollector$@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true) fun onPickup(event: EntityPickupItemEvent)</ID>
+    <ID>ReturnCount:RelationSyncService.kt$RelationSyncService$fun flush()</ID>
+    <ID>ReturnCount:RemoteConfigService.kt$RemoteConfigService$fun refresh(force: Boolean = false): Boolean</ID>
+    <ID>ReturnCount:ReportCommand.kt$ReportCommand$private fun create(context: CommandContext&lt;Sender>)</ID>
+    <ID>ReturnCount:ReportMenu.kt$ReportMenu$@EventHandler fun click(event: InventoryClickEvent)</ID>
+    <ID>ReturnCount:ReportService.kt$ReportService$fun create( reporterId: UUID, reporterName: String, targetId: UUID, targetName: String, reason: String, ): CreateReportResult</ID>
+    <ID>ReturnCount:ReportService.kt$ReportService$private fun mutate(id: Long, staffName: String, status: ReportStatus): ReportMutationResult</ID>
+    <ID>ReturnCount:SchedulerService.kt$SchedulerService$fun runSync(player: Player?, task: Runnable): TaskHandle</ID>
+    <ID>ReturnCount:TimeUtil.kt$TimeUtil$@JvmStatic fun formatTimeAgo(timestamp: Instant, lm: LocaleManager): String</ID>
+    <ID>ReturnCount:TimeUtil.kt$TimeUtil$@JvmStatic fun parseDuration(durationStr: String?): Long</ID>
+    <ID>ReturnCount:VaultEconomyBridge.kt$VaultEconomyBridge$fun verifyTransfer(payer: Player, targetName: String, requestedAmount: Double)</ID>
+    <ID>ReturnCount:VaultEconomyBridge.kt$VaultEconomyBridge$private fun provider(): Any?</ID>
+    <ID>ReturnCount:ViolationSyncService.kt$ViolationSyncService$fun flush()</ID>
+    <ID>ReturnCount:WorldGuardManager.kt$WorldGuardManager$override fun isPlayerInDisabledRegion(player: Player): Boolean</ID>
+    <ID>SpreadOperator:ConfigView.kt$ConfigView$(*path.split('.').toTypedArray())</ID>
+    <ID>SwallowedException:ConfigManager.kt$ConfigManager$e: PatternSyntaxException</ID>
+    <ID>SwallowedException:ConfigView.kt$ConfigView$ex: SerializationException</ID>
+    <ID>SwallowedException:FoliaDetector.kt$FoliaDetector$ex: ClassNotFoundException</ID>
+    <ID>SwallowedException:MonitorMode.kt$MonitorMode.Companion$e: IllegalArgumentException</ID>
+    <ID>SwallowedException:MonitorNameMode.kt$MonitorNameMode.Companion$ex: IllegalArgumentException</ID>
+    <ID>SwallowedException:MonitorTheme.kt$MonitorTheme.Companion$e: IllegalArgumentException</ID>
+    <ID>SwallowedException:TimeUtil.kt$TimeUtil$ex: Exception</ID>
+    <ID>ThrowsCount:JacksonAiResponseParser.kt$JacksonAiResponseParser$private fun parseDecision(node: JsonNode, label: String): AIModelDecision</ID>
+    <ID>TooGenericExceptionCaught:AiCheck.kt$AiCheck$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:CommandManager.kt$CommandManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ConfigManager.kt$ConfigManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DefaultAiService.kt$DefaultAiService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:LatencyUtils.kt$LatencyUtils$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:PunishmentApiImpl.kt$PunishmentApiImpl$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:PunishmentManager.kt$PunishmentManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:RelationSyncService.kt$RelationSyncService$error: Exception</ID>
+    <ID>TooGenericExceptionCaught:RemoteConfigService.kt$RemoteConfigService$error: Exception</ID>
+    <ID>TooGenericExceptionCaught:ReportService.kt$ReportService$error: Exception</ID>
+    <ID>TooGenericExceptionCaught:TimeUtil.kt$TimeUtil$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:ViolationSyncService.kt$ViolationSyncService$error: Exception</ID>
+    <ID>TooManyFunctions:AIServerProvider.kt$AIServerProvider : Supplier</ID>
+    <ID>TooManyFunctions:AiCheck.kt$AiCheck : AbstractCheckPacketCheckReloadable</ID>
+    <ID>TooManyFunctions:BanStatusBridge.kt$BanStatusBridge</ID>
+    <ID>TooManyFunctions:BatchingAiTransport.kt$BatchingAiTransport : AiTransport</ID>
+    <ID>TooManyFunctions:ConfigManager.kt$ConfigManager</ID>
+    <ID>TooManyFunctions:MessageUtil.kt$MessageUtil</ID>
+    <ID>TooManyFunctions:MonitorCommand.kt$MonitorCommand : SpectraCommandListener</ID>
+    <ID>TooManyFunctions:PacketListener.kt$PacketListener : PacketListenerAbstract</ID>
+    <ID>TooManyFunctions:PunishmentManager.kt$PunishmentManager</ID>
+    <ID>TooManyFunctions:RelationCollector.kt$RelationCollector : Listener</ID>
+    <ID>TooManyFunctions:SqlViolationDatabase.kt$SqlViolationDatabase : ViolationDatabase</ID>
+    <ID>TooManyFunctions:TickData.kt$TickData$Companion</ID>
+    <ID>TooManyFunctions:TickDataSequence.kt$TickDataSequence$Companion</ID>
+    <ID>TooManyFunctions:ViolationDatabase.kt$ViolationDatabase</ID>
+    <ID>UnusedPrivateProperty:SpectraPlayer.kt$SpectraPlayer$aiServerProvider: AIServerProvider</ID>
+    <ID>UnusedPrivateProperty:SpectraPlayer.kt$SpectraPlayer$alertManager: AlertManager</ID>
+    <ID>UnusedPrivateProperty:SpectraPlayer.kt$SpectraPlayer$dataCollectorManager: DataCollectorManager</ID>
+    <ID>UnusedPrivateProperty:TickData.kt$TickData.Companion$i</ID>
+    <ID>UseCheckOrError:RelationEventStore.kt$RelationEventStore$throw IllegalStateException("Relation database is unavailable")</ID>
+    <ID>UseRequire:JacksonAiResponseParser.kt$JacksonAiResponseParser$throw IllegalArgumentException("$label cannot be accepted with status '$status'")</ID>
+    <ID>UseRequire:JacksonAiResponseParser.kt$JacksonAiResponseParser$throw IllegalArgumentException("$label contains unsupported status '$status'")</ID>
+    <ID>UseRequire:JacksonAiResponseParser.kt$JacksonAiResponseParser$throw IllegalArgumentException("$label contains unsupported verdict '$verdict'")</ID>
+    <ID>UseRequire:JacksonAiResponseParser.kt$JacksonAiResponseParser$throw IllegalArgumentException("$label decision must be an object")</ID>
+    <ID>UseRequire:JacksonAiResponseParser.kt$JacksonAiResponseParser$throw IllegalArgumentException("$label must be a boolean")</ID>
+    <ID>UseRequire:JacksonAiResponseParser.kt$JacksonAiResponseParser$throw IllegalArgumentException("$label must be a finite number in [0, 1]")</ID>
+    <ID>UseRequire:JacksonAiResponseParser.kt$JacksonAiResponseParser$throw IllegalArgumentException("$label must be an integer")</ID>
+    <ID>UseRequire:JacksonAiResponseParser.kt$JacksonAiResponseParser$throw IllegalArgumentException("$label window_ticks must be non-negative")</ID>
+    <ID>UseRequire:JacksonAiResponseParser.kt$JacksonAiResponseParser$throw IllegalArgumentException("AI response models must be an object")</ID>
+    <ID>UseRequire:JacksonAiResponseParser.kt$JacksonAiResponseParser$throw IllegalArgumentException("AI response must be a JSON object")</ID>
+    <ID>WildcardImport:SqlViolationDatabase.kt$import org.jetbrains.exposed.v1.core.*</ID>
+  </CurrentIssues>
+</SmellBaseline>

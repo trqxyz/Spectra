@@ -1,0 +1,21 @@
+namespace trqxyz.spectra.flatbuffers.v2;
+
+// Protocol v2 stores every tick inline. A vector of structs is one contiguous
+// float32 region and can be consumed by NumPy with np.frombuffer.
+struct TickData {
+  deltaYaw:float;
+  deltaPitch:float;
+  accelYaw:float;
+  accelPitch:float;
+  jerkYaw:float;
+  jerkPitch:float;
+  gcdErrorYaw:float;
+  gcdErrorPitch:float;
+}
+
+table TickDataSequence {
+  ticks:[TickData];
+}
+
+root_type TickDataSequence;
+file_identifier "SPV2";

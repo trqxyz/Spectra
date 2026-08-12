@@ -1,0 +1,199 @@
+prefix: "<gradient:#000000:#ffffff>Spectra</gradient> <gray>|</gray>"
+
+alerts-enabled: "<prefix> <color:#eef2f3>Уведомления</color> <color:#a8ff78>включены</color>."
+alerts-disabled: "<prefix> <color:#eef2f3>Уведомления</color> <color:#ff4b2b>выключены</color>."
+alerts-format: "<prefix> <hover:show_text:'<gray>Нажми, чтобы телепортироваться к <white><player></white>'><click:run_command:'/tp <player>'><white><player></white></click></hover> <gray>подозревается в</gray> <hover:show_text:'<gray>Детали: <white><verbose></white>'><color:#ff416c><check_name></color></hover> <gray>[<color:#ff4b2b>x<vl></color>]</gray>"
+
+player-not-found: "<prefix> <color:#ff4b2b>Игрок исключен или находится вне сети!</color>"
+run-as-player: "<prefix> <color:#ff4b2b>Эту команду могут использовать только игроки!</color>"
+reload-start: "<prefix> <color:#f6d365>Перезагрузка конфигурации...</color>"
+reload-success: "<prefix> <color:#a8ff78>Конфигурация Spectra перезагружена.</color>"
+storage:
+  degraded: "<prefix> <color:#f6d365>Постоянное хранилище недоступно. Spectra использует временное хранилище для данных. После перезапуска они исчезнут.</color>"
+
+connect:
+  disabled: "<prefix> <color:#ff4b2b>Подключение отключено: укажите</color> <white>connect.panel-url</white> <color:#ff4b2b>в config.yml.</color>"
+  console-only: "<prefix> <color:#ff4b2b>В целях безопасности управляйте привязкой к панели из консоли сервера.</color>"
+  insecure-url: "<prefix> <color:#ff4b2b>Отказ отправлять учётные данные по небезопасному URL.</color> <gray>Используйте https в</gray> <white>connect.panel-url</white><gray>.</gray>"
+  start: "<prefix> <white>Чтобы привязать сервер,</white> <link><color:#74ebd5><u>нажмите здесь</u></color></link><white>.</white>"
+  url: "<prefix> <gray>Или откройте</gray> <white><url></white> <gray>и введите</gray> <color:#a8ff78><code></color>"
+  waiting: "<prefix> <color:#f6d365>Ожидание подтверждения в панели...</color>"
+  restarted: "<prefix> <gray>Предыдущий запрос на привязку отменён.</gray>"
+  success: "<prefix> <color:#a8ff78>Подключено!</color> <gray>Сервер привязан к</gray> <white><server></white><gray>.</gray>"
+  success-needs-plan: "<prefix> <color:#a8ff78>Подключено к</color> <white><server></white><color:#f6d365>, но у него ещё нет активного плана. Выберите план в панели, чтобы включить ИИ-проверки.</color>"
+  denied: "<prefix> <color:#ff4b2b>Подключение отклонено в панели.</color>"
+  expired: "<prefix> <color:#ff4b2b>Код истёк.</color> <gray>Запустите</gray> <white>/spectra connect</white> <gray>снова.</gray>"
+  error: "<prefix> <color:#ff4b2b>Не удалось подключиться:</color> <white><reason></white>"
+  disconnect-confirm: "<prefix> <color:#f6d365>Это отвяжет сервер и отзовёт его ключ.</color> <gray>Введите</gray> <white>/spectra disconnect confirm</white> <gray>в течение 30 сек, чтобы продолжить.</gray>"
+  disconnect-no-pending: "<prefix> <gray>Нечего подтверждать. Сначала введите</gray> <white>/spectra disconnect</white><gray>.</gray>"
+  disconnect-success: "<prefix> <color:#a8ff78>Отключено.</color> <gray>IP сервера удалён из панели, локальный ключ очищен.</gray>"
+  disconnect-local-only: "<prefix> <color:#f6d365>Локальная привязка удалена, но панель недоступна.</color> <gray>Отзовите этот сервер в панели вручную.</gray>"
+  disconnect-nothing: "<prefix> <gray>Этот сервер не привязан.</gray>"
+  status-header: "<gradient:#000000:#ffffff>--- Подключение Spectra ---</gradient>"
+  status-linked: "<color:#a8ff78> ▶ Привязан к <white><server></white></color>"
+  status-key: "<gray> Ключ: <white><key></white></gray>"
+  status-server-url: "<gray> Инференс: <white><url></white></gray>"
+  status-not-linked: "<prefix> <gray>Этот сервер не привязан. Запустите</gray> <white>/spectra connect</white><gray>.</gray>"
+
+datacollect:
+  details-required: "<prefix> <color:#ff4b2b>Требуется указать детали для типов LEGIT и CHEAT.</color>"
+  invalid-type: "<prefix> <color:#ff4b2b>Неверный статус. Используйте LEGIT или CHEAT.</color>"
+  start-success: "<prefix> <color:#a8ff78>Сбор данных для <white><player></white> начат. Статус: <white><status></white></color>"
+  start-restarted: "<prefix> <color:#f6d365>Сбор данных для <white><player></white> уже запущен. Он был перезапущен с новым статусом.</color>"
+  stop-success: "<prefix> <color:#a8ff78>Сбор данных для <white><player></white> остановлен и сохранён.</color>"
+  stop-fail: "<prefix> <color:#ff4b2b>Сбор данных для <white><player></white> не был запущен.</color>"
+  cancel-success: "<prefix> <color:#f6d365>Сбор данных для <white><player></white> отменён без сохранения.</color>"
+  status-header: "<gradient:#f6d365:#fda085>--- Активные сессии сбора данных ---</gradient>"
+  status-player: "<color:#f6d365> \u25B6 <player>:</color> <white><status></white><gray> (<color:#00b4db>Время:</color> <white><time>с</white>, <color:#00b4db>Тики:</color> <white><ticks></white>)</gray>"
+  status-none: "<gray>Нет активных сессий.</gray>"
+  status-no-session: "<prefix> <color:#ff4b2b>Нет активной сессии сбора данных для <white><player></white>.</color>"
+
+monitor:
+  enabled: "<prefix> <color:#a8ff78>Мониторинг включен для <white><player></white>.</color>"
+  disabled: "<prefix> <color:#f6d365>Мониторинг выключен для <white><player></white>.</color>"
+  no-data: "<prefix> <color:#ff4b2b>Не удалось получить данные для <white><player></white>.</color>"
+  no-aicheck: "<prefix> <color:#ff4b2b>AI-Чек неактивен для <white><player></white>.</color>"
+  setting-updated: "<prefix> <color:#a8ff78>Монитор <white><setting></white> установлен: <white><value></white>.</color>"
+  invalid-setting: "<prefix> <color:#ff4b2b>Неверный <white><setting></white>. Используй: <options>.</color>"
+  no-permission-other: "<prefix> <color:#ff4b2b>Нет прав на мониторинг других игроков.</color>"
+  not-active: "<prefix> <color:#f6d365>Мониторинг не активен.</color>"
+  reset: "<prefix> <color:#a8ff78>Настройки монитора сброшены.</color>"
+  list-header: "<prefix> <color:#a8ff78>Активные сессии (<count>):</color>"
+  list-entry: " <gray>•</gray> <white><viewer></white> <gray>→</gray> <white><target></white>"
+  list-empty: "<prefix> <color:#f6d365>Нет активных сессий мониторинга.</color>"
+
+view:
+  enabled: "<prefix> <color:#a8ff78>Режим наблюдения включен.</color>"
+  disabled: "<prefix> <color:#f6d365>Режим наблюдения выключен.</color>"
+
+brand:
+  alerts-enabled: "<prefix> <color:#eef2f3>Оповещения о клиентах</color> <color:#a8ff78>включены</color>."
+  alerts-disabled: "<prefix> <color:#eef2f3>Оповещения о клиентах</color> <color:#ff4b2b>выключены</color>."
+  notification: "<prefix> <white><player></white> <gray>присоединился, используя</gray> <color:#00b4db><brand></color>"
+  disconnect-forge: "<color:#ff4b2b>Ваша версия Forge в черном списке из-за встроенного эксплоита.</color>\n<color:#f6d365>Затронутые версии: 1.18.2-1.19.3</color>\n<gray>Пожалуйста, обновите Forge или используйте другой клиент.</gray>"
+
+profile:
+  no-data: "<prefix> <color:#ff4b2b>Не удалось получить данные (исключён или оффлайн).</color>"
+  lines:
+    - "<gradient:#8e9eab:#eef2f3>---- [ Профиль: <player> ] ----</gradient>"
+    - " <color:#00b4db>Пинг:</color> <white><ping> мс</white>"
+    - " <color:#00b4db>Клиент:</color> <white><version></white> <gray>(<brand>)</gray>"
+    - " <color:#00b4db>Время сессии:</color> <white><session_time></white>"
+    - " <color:#00b4db>Общее время игры:</color> <white><total_playtime></white>"
+    - " <color:#00b4db>Чувствительность:</color> <white><sens_x>%</white> / <white><sens_y>%</white>"
+    - " <color:#ff416c>AI буфер:</color> <white><ai_buffer></white>"
+    - " <color:#ff416c>AI вер-ть >90%:</color> <white><ai_probs_90></white>"
+
+history:
+  disabled: "<prefix> <color:#ff4b2b>Подсистема истории отключена!</color>"
+  header: "<prefix> <color:#00b4db>История нарушений игрока</color> <white><player></white> <gray>(<page>/<max_pages>)</gray>"
+  entry: "<prefix> <dark_gray>[<white><server></white>]</dark_gray> <color:#00b4db>Провалил</color> <hover:show_text:'<gray>Детали: <white><verbose></white>'><white><check></white> <dark_gray>[<color:#ff4b2b>x<vl></color>]</dark_gray></hover> <dark_gray>(<color:#a8ff78><timeago></color>)</dark_gray>"
+  no-violations: "<prefix> <gray>У этого игрока нет найденных нарушений.</gray>"
+
+logs:
+  header: "<prefix> <color:#00b4db>Последние нарушения</color> <gray>(<page>/<max_pages>)</gray>"
+  entry: "<prefix> <white><player></white> <dark_gray>|</dark_gray> <hover:show_text:'<gray>Детали: <white><verbose></white>'><white><check></white> <dark_gray>[<color:#ff4b2b>x<vl></color>]</dark_gray></hover> <dark_gray>(<color:#a8ff78><timeago></color>)</dark_gray>"
+  no-violations: "<prefix> <gray>Нарушения не найдены.</gray>"
+
+punish:
+  reset-success: "<prefix> <color:#a8ff78>Наказания сброшены для</color> <white><player></white>."
+
+exempt:
+  invalid-duration: "<prefix> <color:#ff4b2b>Неверный формат времени. Используйте: 10s, 5m, 1h, 1d, или perm.</color>"
+  success-perm: "<prefix> <color:#a8ff78>Для игрока <white><player></white> навсегда отключены наказания.</color>"
+  success-temp: "<prefix> <color:#a8ff78>Для игрока <white><player></white> отключены наказания на <white><duration></white>.</color>"
+  remove-success: "<prefix> <color:#f6d365>Для игрока <white><player></white> снова включены наказания.</color>"
+  remove-fail: "<prefix> <color:#ff4b2b>У игрока <white><player></white> не были отключены наказания командой.</color>"
+  status-perm-permission: "<prefix> <color:#f6d365>У игрока <white><player></white> отключены наказания (через право).</color>"
+  status-perm-command: "<prefix> <color:#f6d365>У игрока <white><player></white> отключены наказания (через команду).</color>"
+  status-not-exempt: "<prefix> <color:#a8ff78>У игрока <white><player></white> включены наказания.</color>"
+  status-expired: "<prefix> <color:#f6d365>Срок отключения наказаний для <white><player></white> истек.</color>"
+  status-temp: "<prefix> <color:#00b4db>Для игрока <white><player></white> наказания отключены еще на <white><duration></white>.</color>"
+
+suspicious:
+  alerts-enabled: "<prefix> <color:#eef2f3>Уведомления о подозрительных игроках</color> <color:#a8ff78>включены</color>."
+  alerts-disabled: "<prefix> <color:#eef2f3>Уведомления о подозрительных игроках</color> <color:#ff4b2b>выключены</color>."
+  alert-triggered: "<prefix> <color:#ff416c>Игрок</color> <white><player></white> <color:#ff416c>подозрителен</color> <dark_gray>|</dark_gray> <color:#ff4b2b><buffer></color>"
+  list-empty: "<prefix> <gray>Сейчас нет подозрительных игроков.</gray>"
+  list-header: "<gradient:#ff416c:#ff4b2b>--- Подозрительные Игроки (<count>) ---</gradient>"
+  list-entry: "<color:#f6d365> \u25B6 <player>:</color> <gray>Буфер:</gray> <color:#ff4b2b><buffer></color> <gray>(Пинг:</gray> <white><ping>мс</white><gray>)</gray>"
+  list-entry-hover: "<gray>Открыть профиль</gray>"
+  flagged-empty: "<prefix> <gray>Сейчас нет онлайн-игроков с флагами.</gray>"
+  flagged-header: "<gradient:#ff416c:#ff4b2b>--- Игроки онлайн с флагами (<count>) ---</gradient>"
+  flagged-entry: "<color:#f6d365> \u25B6 <player>:</color> <gray>Флагов:</gray> <color:#ff4b2b><flags></color>"
+  top-none: "<prefix> <gray>Сейчас нет подозрительных игроков.</gray>"
+  top-player: "<prefix> <color:#00b4db>Самый подозрительный:</color> <white><player></white> <gray>с буфером</gray> <color:#ff4b2b><buffer></color>"
+  top-player-hover: "<gray>Включить мониторинг</gray>"
+
+cross-server:
+  alert-prefix: "<dark_gray>[</dark_gray><color:#74ebd5><server></color><dark_gray>]</dark_gray>"
+  server-tag: "<dark_gray>[</dark_gray><color:#74ebd5><server></color><dark_gray>]</dark_gray>"
+
+stats:
+  invalid-period: "<prefix> <color:#ff4b2b>Неверный период. Используй: <options>.</color>"
+  header: "<gradient:#000000:#ffffff>---- [ Статистика Spectra ] ----</gradient>"
+  flags: " <color:#00b4db>Флагов (<period>):</color> <white><flags></white> <gray>(<flags_per_hour>/ч)</gray>"
+  flags-hover: "<gray>Срабатываний в час:</gray> <white><flags_per_hour></white><newline><gray>Открыть недавние логи</gray>"
+  players: " <color:#00b4db>Игроков (<period>):</color> <white><players></white>"
+  players-hover: "<gray>Уникальные игроки за</gray> <white><period></white>: <white><players></white>"
+  violators: " <color:#00b4db>Нарушителей (<period>):</color> <white><violators></white> <gray>(<violators_percent>)</gray>"
+  violators-hover: "<white><violators_percent></white> <gray>от уникальных игроков за</gray> <white><period></white>"
+  online: " <color:#00b4db>Игроков онлайн:</color> <white><online_players></white>"
+  suspicious: " <color:#ff416c>Подозрительных сейчас:</color> <white><suspicious_now></white> <gray>(<suspicious_percent_now>)</gray>"
+  suspicious-hover: "<white><suspicious_now></white> <gray>из</gray> <white><online_players></white> <gray>онлайн-игроков</gray><newline><gray>Порог:</gray> <white>AI буфер > <suspicious_threshold></white>"
+
+reports:
+  disabled: "<prefix> <color:#f6d365>Система репортов выключена.</color>"
+  self: "<prefix> <color:#ff4b2b>Нельзя отправить репорт на самого себя.</color>"
+  reason-short: "<prefix> <color:#ff4b2b>Причина должна содержать минимум <white><min></white> символа.</color>"
+  reason-long: "<prefix> <color:#ff4b2b>Причина не может быть длиннее <white><max></white> символов.</color>"
+  cooldown: "<prefix> <color:#f6d365>Подождите <white><seconds> сек.</white> перед новым репортом.</color>"
+  limit: "<prefix> <color:#ff4b2b>Достигнут лимит открытых репортов.</color>"
+  submitted: "<prefix> <color:#eef2f3>Репорт <white>#<id></white> на <white><player></white> отправлен.</color>"
+  notification: "<prefix> <color:#eef2f3>Репорт <white>#<id></white>: <white><reporter></white> → <white><player></white></color> <gray><reason></gray>"
+  header: "<gradient:#000000:#ffffff>--- Открытые репорты (<page>/<max_pages>) ---</gradient>"
+  entry: "<dark_gray>#<id></dark_gray> <white><status></white> <gray>|</gray> <white><reporter></white> → <white><player></white> <gray>| <reason> (<timeago>)</gray>"
+  empty: "<prefix> <gray>Открытых репортов нет.</gray>"
+  not-found: "<prefix> <color:#ff4b2b>Репорт #<id> не найден.</color>"
+  claimed: "<prefix> <color:#eef2f3>Репорт #<id> назначен вам.</color>"
+  closed: "<prefix> <color:#eef2f3>Репорт #<id> закрыт.</color>"
+  already-closed: "<prefix> <color:#f6d365>Репорт #<id> уже закрыт.</color>"
+
+decisions:
+  header: "<gradient:#000000:#ffffff>--- Решения ИИ: <player> (<page>/<max_pages>) ---</gradient>"
+  entry: "<white><model></white> <gray>|</gray> <white><probability>%</white> <gray><verdict>/<status> | accepted=<accepted> actionable=<actionable> | confidence=<confidence> novelty=<novelty> | buffer=<buffer> window=<window> version=<version> | <timeago></gray>"
+  empty: "<prefix> <gray>Для этого игрока ещё нет сохранённых решений ИИ.</gray>"
+
+help:
+  - "<gradient:#000000:#ffffff>-------- [ Spectra ] --------</gradient>"
+  - " <color:#00b4db>/<command> alerts</color> <gray>- Включить/выключить оповещения о нарушениях</gray>"
+  - " <color:#00b4db>/<command> brands</color> <gray>- Включить/выключить оповещения о клиенте игрока</gray>"
+  - " <color:#00b4db>/<command> suspicious alerts</color> <gray>- Включить/выключить оповещения о подозрительных игроках</gray>"
+  - " <color:#00b4db>/<command> suspicious <list|top|flagged></color> <gray>- Просмотр подозрительных игроков</gray>"
+  - " <color:#00b4db>/<command> profile <player></color> <gray>- Просмотреть профиль игрока</gray>"
+  - " <color:#00b4db>/<command> monitor <player></color> <gray>- Мониторинг ИИ для игрока в реальном времени</gray>"
+  - " <color:#00b4db>/<command> view</color> <gray>- Включить/выключить режим наблюдения за игроками</gray>"
+  - " <color:#00b4db>/<command> history <player> [page]</color> <gray>- Просмотреть историю нарушений игрока</gray>"
+  - " <color:#00b4db>/<command> logs [page]</color> <gray>- Просмотр недавних нарушений</gray>"
+  - " <color:#00b4db>/<command> stats</color> <gray>- Просмотр статистики сервера</gray>"
+  - " <color:#00b4db>/<command> report <player> <reason></color> <gray>- Отправить репорт на игрока</gray>"
+  - " <color:#00b4db>/<command> reports [page]</color> <gray>- Просмотр и управление репортами</gray>"
+  - " <color:#00b4db>/<command> decisions <player> [page]</color> <gray>- Просмотр последних решений ИИ</gray>"
+  - " <color:#00b4db>/<command> dc <start|stop|cancel|status></color> <gray>- Управление сбором данных</gray>"
+  - " <color:#00b4db>/<command> punish reset <player></color> <gray>- Сбросить все уровни нарушений игрока</gray>"
+  - " <color:#00b4db>/<command> exempt</color> <gray>- Исключить игрока из проверок</gray>"
+  - " <color:#00b4db>/<command> reload</color> <gray>- Перезагрузить конфигурацию</gray>"
+  - " <color:#00b4db>/<command> connect</color> <gray>- Привязать сервер к панели Spectra</gray>"
+  - " <color:#00b4db>/<command> disconnect</color> <gray>- Отвязать сервер от панели</gray>"
+  - " <color:#00b4db>/<command> connect status</color> <gray>- Показать статус подключения к панели</gray>"
+  - " <color:#00b4db>/<command> help</color> <gray>- Показать это справочное сообщение</gray>"
+
+internal:
+  error: "<prefix> <color:#ff4b2b>Произошла внутренняя ошибка.</color>"
+
+time:
+  ago: " назад"
+  days: "д"
+  hours: "ч"
+  minutes: "м"
+  seconds: "с"

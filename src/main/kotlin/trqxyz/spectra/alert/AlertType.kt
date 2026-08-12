@@ -1,0 +1,34 @@
+/*
+ * This file is part of Spectra - https://github.com/trqxyz/ai_server
+ * Copyright (C) 2026 KaelusAI
+ *
+ * Spectra is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Spectra is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+package trqxyz.spectra.alert
+
+import trqxyz.spectra.utils.Message
+
+enum class AlertType(
+  val permission: String,
+  val enabledMessage: Message,
+  val disabledMessage: Message,
+) {
+  REGULAR("spectra.alerts", Message.ALERTS_ENABLED, Message.ALERTS_DISABLED),
+  BRAND("spectra.brand", Message.BRAND_ALERTS_ENABLED, Message.BRAND_ALERTS_DISABLED),
+  SUSPICIOUS(
+    "spectra.suspicious.alerts",
+    Message.SUSPICIOUS_ALERTS_ENABLED,
+    Message.SUSPICIOUS_ALERTS_DISABLED,
+  ),
+}
