@@ -15,6 +15,8 @@ hs_err_pid*
 ##############################
 bin/
 build/
+buildSrc/
+gradle/
 .gradle
 .gradletasknamecache
 gradle-app.setting
@@ -74,3 +76,28 @@ nb-configuration.xml
 ##############################
 run/
 fabric/run/
+
+##############################
+## Local scripts and generated tooling
+##############################
+*.bat
+*.cmd
+*.ps1
+*.sh
+
+# Graphify output, metadata and caches
+graphify-out/
+.graphify/
+.graphify_*
+
+# Nested repository metadata and local tooling state
+.git/
+.cache/
+*.tmp
+*.bak
+
+# OS/editor metadata
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
