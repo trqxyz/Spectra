@@ -26,6 +26,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Both JDKs are installed: the daemon runs on the matrix version,
+      # while Gradle's toolchain still finds 21 to compile with.
       - name: Set up JDK ${{ matrix.java }} and 21
         uses: actions/setup-java@v4
         with:
@@ -37,6 +39,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      # gradlew is committed without the executable bit, so Linux needs this.
       - name: Make gradlew executable
         run: chmod +x gradlew
 
@@ -66,7 +69,6 @@ jobs:
           name: Spectra-java${{ matrix.java }}
           path: ${{ steps.jar.outputs.path }}
           if-no-files-found: error
-
   release:
     name: Release
     needs: build
