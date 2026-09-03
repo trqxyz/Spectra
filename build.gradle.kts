@@ -91,6 +91,8 @@ dependencies {
   testRuntimeOnly("io.netty:netty-handler:4.1.113.Final")
 }
 
+val javaTarget = (findProperty("javaTarget") as String?)?.trim()?.toInt() ?: 17
+
 java {
   toolchain.languageVersion.set(JavaLanguageVersion.of(21))
   disableAutoTargetJvm()
@@ -99,13 +101,13 @@ java {
 kotlin { jvmToolchain(21) }
 
 tasks.withType<JavaCompile> {
-  options.release.set(17)
+  options.release.set(javaTarget)
   options.encoding = "UTF-8"
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
   compilerOptions {
-    jvmTarget.set(JvmTarget.JVM_17)
+    jvmTarget.set(JvmTarget.fromTarget(javaTarget.toString()))
     freeCompilerArgs.addAll("-jvm-default=enable")
   }
 }
@@ -114,7 +116,10 @@ tasks.jar { archiveClassifier.set("thin") }
 
 tasks.shadowJar {
   archiveBaseName.set(rootProject.name)
-  archiveClassifier.set(if (BuildConfig.shadePE) "" else "unbundled")
+  archiveClassifier.set(
+    listOfNotNull("java$javaTarget", if (BuildConfig.shadePE) null else "unbundled")
+      .joinToString("-")
+  )
 
   eachFile {
     if (path == "META-INF/services/org.flywaydb.core.extensibility.Plugin") {
@@ -210,7 +215,7 @@ detekt {
 }
 
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-  jvmTarget = "17"
+  jvmTarget = javaTarget.toString()
   exclude("**/flatbuffers/**")
   exclude("**/build/**")
 }
