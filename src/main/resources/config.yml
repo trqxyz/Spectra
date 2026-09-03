@@ -2,7 +2,7 @@
 # Copyright 2026 KaelusAI, DefineOutside and contributors, Licensed under GPLv3.
 
 # Do not change this value manually.
-config-version: 9
+config-version: 10
 
 # Locale: en, ru
 locale: "en"
@@ -24,6 +24,7 @@ ai:
   # The plugin sends one continuous player stream and does not assign local tick windows to models.
   models: "flash,pro,night"
   # When true, sequences are recorded and sent continuously without requiring combat (hits).
+  # Left false so data is only collected around real combat, not while idle.
   continuous: false
   buffer:
     # The violation level (VL) at which a flag will be triggered.
@@ -109,8 +110,10 @@ exemptions:
   bedrock: true
 
 connect:
-  # Base URL of the Spectra panel (used by "/spectra connect").
-  panel-url: "https://panel.kaelus.dev"
+  # Base URL of the local Spectra backend (used by "/spectra connect").
+  # Keep this default when the Minecraft server and backend run on one machine.
+  # For a remote backend, replace only the host/port; do not append /connect or /api paths.
+  panel-url: "http://127.0.0.1:8000"
 
 client-brand:
   # This means it won't broadcast their brand to operators if the brand matches the following regexes

@@ -20,7 +20,7 @@ package trqxyz.spectra.config
 import java.io.File
 
 internal object ConfigMigrations {
-  const val LATEST_VERSION = 9
+  const val LATEST_VERSION = 10
 
   private val VERSION_RE = Regex("""^\s*config-version:\s*(\d+)""", RegexOption.MULTILINE)
 
@@ -42,6 +42,8 @@ internal object ConfigMigrations {
       drops += "ai/stream-window"
       drops += "ignore-duplicate-packet-rotation"
     }
+    // ai/continuous is deliberately never force-dropped: collection follows
+    // combat, and deleting the key would silently re-enable idle capture.
     return drops
   }
 }

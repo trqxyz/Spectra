@@ -67,7 +67,7 @@ class DataCollectorCheck(
       configManager.aiContinuous ||
         spectraPlayer.combat.ticksSinceAttack <= configManager.aiSequence
     ) {
-      session.addTick(tick)
+      if (tick.isInformative) session.addTick(tick)
     }
   }
 }

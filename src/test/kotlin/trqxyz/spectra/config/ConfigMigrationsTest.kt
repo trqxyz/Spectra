@@ -150,6 +150,13 @@ class ConfigMigrationsTest {
   }
 
   @Test
+  fun `upgrades never drop the ai continuous choice`() {
+    for (version in 0 until ConfigMigrations.LATEST_VERSION) {
+      assertFalse(ConfigMigrations.forcedDropsForUpgradeFrom(version).contains("ai/continuous"))
+    }
+  }
+
+  @Test
   fun `merge adds missing keys and preserves comments, blank lines, user values`(
     @TempDir tempDir: Path
   ) {
@@ -175,8 +182,9 @@ class ConfigMigrationsTest {
     assertContains(merged, """locale: "ru"""")
     assertContains(merged, "probability: false    # AI probability values per check")
     assertContains(merged, "packet-duplication: false  # Mojang packet duplication bugs")
-    assertContains(merged, "\n\nclient-brand:")
-    assertContains(merged, "\n\nalerts:")
+    val normalized = merged.replace("\r\n", "\n")
+    assertContains(normalized, "\n\nclient-brand:")
+    assertContains(normalized, "\n\nalerts:")
     val versionLines = merged.lineSequence().count { it.trim().startsWith("config-version:") }
     assertEquals(1, versionLines)
   }

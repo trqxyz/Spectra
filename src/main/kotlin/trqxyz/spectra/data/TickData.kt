@@ -34,6 +34,18 @@ class TickData(
   val gcdErrorYaw: Float,
   val gcdErrorPitch: Float,
 ) {
+  /** True when this sample contains an actual rotation-derived feature. */
+  val isInformative: Boolean
+    get() =
+      deltaYaw != 0f ||
+        deltaPitch != 0f ||
+        accelYaw != 0f ||
+        accelPitch != 0f ||
+        jerkYaw != 0f ||
+        jerkPitch != 0f ||
+        gcdErrorYaw != 0f ||
+        gcdErrorPitch != 0f
+
   fun toCsv(status: String): String {
     return buildString { appendCsv(this, status) }
   }

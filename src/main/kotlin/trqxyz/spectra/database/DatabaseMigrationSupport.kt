@@ -84,8 +84,9 @@ internal fun isRepairableSqliteV1ChecksumMismatch(
   val matchesKnownMismatch =
     invalidMigration != null &&
       invalidMigration.version == SQLITE_SCHEMA_VERSION &&
-      invalidMigration.filepath?.endsWith(SQLITE_V1_SCRIPT_PATH_SUFFIX, ignoreCase = true) ==
-        true &&
+      invalidMigration.filepath
+        ?.replace('\\', '/')
+        ?.endsWith(SQLITE_V1_SCRIPT_PATH_SUFFIX, ignoreCase = true) == true &&
       invalidMigration.errorDetails.errorMessage.contains("checksum mismatch", ignoreCase = true)
 
   return matchesKnownMismatch &&

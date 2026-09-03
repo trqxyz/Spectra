@@ -221,7 +221,6 @@ class AiCheckResponseTest {
         debugManager = DebugManager(plugin, configManager),
         scheduler = mockk<SchedulerService>(relaxed = true),
         decisionHistory = mockk(relaxed = true),
-        remoteConfigService = mockk(relaxed = true),
         reportService = mockk(relaxed = true),
       )
 

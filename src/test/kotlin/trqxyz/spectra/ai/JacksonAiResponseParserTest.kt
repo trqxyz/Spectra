@@ -152,6 +152,71 @@ class JacksonAiResponseParserTest {
   }
 
   @Test
+  fun `ignores pending model without probability when another model is ready`() {
+    val response =
+      parser.parse(
+        """
+        {
+          "status":"ready",
+          "risk_score":0.999998,
+          "calibrated_probability":0.999998,
+          "verdict":"cheat",
+          "accepted":true,
+          "confidence":0.999996,
+          "novelty":0.0,
+          "model_version":"spectra-pro-v2",
+          "window_ticks":120,
+          "models":{
+            "pro":{
+              "status":"ready",
+              "risk_score":0.999998,
+              "calibrated_probability":0.999998,
+              "verdict":"cheat",
+              "accepted":true,
+              "confidence":0.999996,
+              "novelty":0.0,
+              "model_version":"spectra-pro-v2",
+              "window_ticks":120
+            },
+            "night":{
+              "status":"pending",
+              "risk_score":null,
+              "calibrated_probability":null,
+              "verdict":"unknown",
+              "accepted":false,
+              "confidence":0.0,
+              "novelty":0.0,
+              "model_version":"spectra-night-v2",
+              "window_ticks":500,
+              "probability":null,
+              "risk":null,
+              "model_probability":null,
+              "actionable":false
+            }
+          }
+        }
+        """
+          .trimIndent()
+      )
+
+    assertEquals(0.999998, response.probability)
+    assertTrue("pro" in response.models)
+    assertFalse("night" in response.models)
+  }
+
+  @Test
+  fun `rejects ready model without probability`() {
+    assertFailsWith<IllegalArgumentException> {
+      parser.parse(
+        """
+        {"probability":0.9,"models":{"night":{"status":"ready","probability":null}}}
+        """
+          .trimIndent()
+      )
+    }
+  }
+
+  @Test
   fun `complete accepted contract without server action permission stays non-actionable`() {
     val response =
       parser.parse(

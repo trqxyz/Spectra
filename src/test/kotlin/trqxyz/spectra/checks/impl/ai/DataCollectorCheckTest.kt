@@ -58,9 +58,11 @@ class DataCollectorCheckTest {
   }
 
   @Test
-  fun `normal flying packet enters data collection`() {
+  fun `only complete non-zero rotation sample enters data collection`() {
     val fixture = createFixture()
 
+    // The first packet only initializes rotation state and produces an all-zero feature row.
+    fixture.check.onPacketReceive(fixture.event)
     fixture.check.onPacketReceive(fixture.event)
 
     verify(exactly = 1) { fixture.session.addTick(any()) }
@@ -94,6 +96,8 @@ class DataCollectorCheckTest {
     every { spectraPlayer.packetStateData } returns packetStateData
     every { spectraPlayer.checkManager } returns checkManager
     every { spectraPlayer.compensatedEntities } returns compensatedEntities
+    every { spectraPlayer.movement.yaw } returnsMany listOf(0f, 1f)
+    every { spectraPlayer.movement.pitch } returns 0f
 
     val session = mockk<DataSession>(relaxed = true)
     val dataCollectorManager = mockk<DataCollectorManager>(relaxed = true)

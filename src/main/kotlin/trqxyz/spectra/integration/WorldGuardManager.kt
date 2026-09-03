@@ -23,6 +23,8 @@ import com.sk89q.worldguard.WorldGuard
 import com.sk89q.worldguard.protection.ApplicableRegionSet
 import com.sk89q.worldguard.protection.flags.StateFlag
 import java.util.Locale
+import java.util.concurrent.atomic.AtomicLong
+import java.util.logging.Level
 import java.util.logging.Logger
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -31,6 +33,7 @@ import trqxyz.spectra.region.RegionProvider
 
 class WorldGuardManager(private val logger: Logger, private val configManager: ConfigManager) :
   RegionProvider {
+  private val lastLookupFailureLogAt = AtomicLong(0)
   private val worldGuardLoaded = Bukkit.getPluginManager().isPluginEnabled("WorldGuard")
   private val worldGuardInstance: WorldGuard? =
     if (worldGuardLoaded) WorldGuard.getInstance() else null
@@ -47,19 +50,36 @@ class WorldGuardManager(private val logger: Logger, private val configManager: C
     if (!worldGuardLoaded) {
       return false
     }
-    val worldGuard = worldGuardInstance ?: return false
-    val container = worldGuard.platform.regionContainer
-    val regions = container.get(BukkitAdapter.adapt(player.world)) ?: return false
+    return try {
+      val worldGuard = worldGuardInstance ?: return false
+      val container = worldGuard.platform.regionContainer
+      val regions = container.get(BukkitAdapter.adapt(player.world)) ?: return false
 
-    val set =
-      regions.getApplicableRegions(
-        BlockVector3.at(player.location.x, player.location.y, player.location.z)
-      )
+      val set =
+        regions.getApplicableRegions(
+          BlockVector3.at(player.location.x, player.location.y, player.location.z)
+        )
 
-    queryFlag(set)?.let {
-      return it
+      queryFlag(set) ?: matchLegacyDisabledList(player, set)
+    } catch (error: IllegalStateException) {
+      // This method is reached from packet processing.  An optional plugin
+      // reload must not propagate into PacketEvents and destabilize the server.
+      logLookupFailure(error)
+      false
     }
-    return matchLegacyDisabledList(player, set)
+  }
+
+  private fun logLookupFailure(error: RuntimeException) {
+    val now = System.currentTimeMillis()
+    val previous = lastLookupFailureLogAt.get()
+    if (now - previous < LOOKUP_FAILURE_LOG_INTERVAL_MILLIS) return
+    if (lastLookupFailureLogAt.compareAndSet(previous, now)) {
+      logger.log(
+        Level.WARNING,
+        "WorldGuard region lookup failed; treating the player as enabled.",
+        error,
+      )
+    }
   }
 
   private fun queryFlag(set: ApplicableRegionSet): Boolean? {
@@ -82,5 +102,9 @@ class WorldGuardManager(private val logger: Logger, private val configManager: C
     val regionId = topRegion.id.lowercase(Locale.ROOT)
     return regionId in disabledRegions["*"].orEmpty() ||
       regionId in disabledRegions[worldName].orEmpty()
+  }
+
+  private companion object {
+    const val LOOKUP_FAILURE_LOG_INTERVAL_MILLIS = 60_000L
   }
 }

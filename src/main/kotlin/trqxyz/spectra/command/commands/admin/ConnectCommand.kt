@@ -46,7 +46,7 @@ import trqxyz.spectra.server.AIServerProvider
 import trqxyz.spectra.utils.Message
 import trqxyz.spectra.utils.MessageUtil
 
-@Suppress("TooManyFunctions", "ReturnCount")
+@Suppress("LongParameterList", "TooManyFunctions", "ReturnCount")
 class ConnectCommand(
   private val plugin: SpectraPlugin,
   private val connectService: ConnectService,
@@ -316,10 +316,12 @@ class ConnectCommand(
 
   private fun sendStartMessages(sender: CommandSender, result: StartResult.Started) {
     val base = configManager.connectPanelUrl.trim().trimEnd('/')
-    val verifyUrl = "$base/connect"
+    val verifyUrl = result.verificationUri.ifBlank { "$base/connect" }
+    val completeUrl =
+      result.verificationUriComplete.ifBlank { "$verifyUrl?code=${result.userCode}" }
     val resolver =
       TagResolver.resolver(
-        MessageUtil.clickUrlTag("link", "$verifyUrl?code=${result.userCode}"),
+        MessageUtil.clickUrlTag("link", completeUrl),
         Placeholder.unparsed("code", result.userCode),
       )
     MessageUtil.sendMessage(sender, MessageUtil.getMessage(Message.CONNECT_START, resolver))

@@ -43,6 +43,18 @@ class JacksonAiResponseParser : AiResponseParser {
     val fields = node.fields()
     while (fields.hasNext()) {
       val (name, value) = fields.next()
+      // Pending/unavailable tiers intentionally have no score until their window is complete.
+      // They are metadata, not decisions, and must not invalidate ready tiers in the same response.
+      val unscoredStatus =
+        if (value.isObject && !hasScore(value)) readText(value.get("status"))?.lowercase() else null
+      if (unscoredStatus != null && unscoredStatus != AIModelDecision.STATUS_READY) {
+        require(unscoredStatus in VALID_STATUSES) {
+          "model '$name' contains unsupported status '$unscoredStatus'"
+        }
+        val accepted = readBoolean(value.get("accepted"), "model '$name' accepted") ?: false
+        require(!accepted) { "model '$name' cannot be accepted with status '$unscoredStatus'" }
+        continue
+      }
       models[name] = parseDecision(value, "model '$name'")
     }
     return models

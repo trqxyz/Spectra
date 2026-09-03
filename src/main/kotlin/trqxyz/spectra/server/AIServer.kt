@@ -31,6 +31,11 @@ import trqxyz.spectra.ai.AiBatchTransport
 import trqxyz.spectra.ai.AiRequestContext
 import trqxyz.spectra.ai.AiTransport
 
+private const val TRANSPORT_TIMEOUT_STATUS = -1
+private const val TRANSPORT_NETWORK_ERROR_STATUS = -2
+private const val HTTP_STATUS_UNAUTHORIZED = 401
+private const val HTTP_STATUS_FORBIDDEN = 403
+
 class AIServer(
   private val plugin: SpectraPlugin,
   url: String,
@@ -54,6 +59,23 @@ class AIServer(
       when {
         apiCooldown.isWaiting() -> RequestException(ResponseCode.WAITING, "Server is in backoff.")
         items.isEmpty() -> RequestException(ResponseCode.BAD_REQUEST, "Empty batch")
+        items.size > BATCH_MAX_ITEMS ->
+          RequestException(
+            ResponseCode.INVALID_SEQUENCE,
+            "Batch count ${items.size} exceeds wire-format max $BATCH_MAX_ITEMS",
+          )
+        items.any { it.isEmpty() } ->
+          RequestException(ResponseCode.INVALID_SEQUENCE, "Batch items must not be empty")
+        items.any { it.size > BATCH_MAX_ITEM_BYTES } ->
+          RequestException(
+            ResponseCode.PAYLOAD_TOO_LARGE,
+            "Batch item exceeds $BATCH_MAX_ITEM_BYTES bytes",
+          )
+        batchWireSize(items) > MAX_INFERENCE_BODY_BYTES ->
+          RequestException(
+            ResponseCode.PAYLOAD_TOO_LARGE,
+            "Batch payload exceeds $MAX_INFERENCE_BODY_BYTES bytes",
+          )
         else -> null
       }
     if (rejection != null) return CompletableFuture.failedFuture(rejection)
@@ -81,7 +103,7 @@ class AIServer(
     val builder =
       HttpRequest.newBuilder(serverUri)
         .header("Content-Type", "application/octet-stream")
-        .header("User-Agent", "Spectra/" + plugin.description.version)
+        .header("User-Agent", "Spectra/" + plugin.pluginMeta.version)
         .header("Authorization", "Bearer $apiKey")
         .header("Accept", "application/json")
         .POST(HttpRequest.BodyPublishers.ofByteArray(body))
@@ -101,10 +123,7 @@ class AIServer(
   }
 
   private fun encodeBatchFraming(items: List<ByteArray>): ByteArray {
-    check(items.size <= BATCH_MAX_ITEMS) {
-      "Batch count ${items.size} exceeds wire-format max $BATCH_MAX_ITEMS"
-    }
-    val totalSize = BATCH_COUNT_SIZE + items.sumOf { BATCH_ITEM_HEADER_SIZE + it.size }
+    val totalSize = batchWireSize(items).toInt()
     val buf = ByteBuffer.allocate(totalSize).order(ByteOrder.LITTLE_ENDIAN)
     buf.putShort(items.size.toShort())
     for (item in items) {
@@ -113,6 +132,9 @@ class AIServer(
     }
     return buf.array()
   }
+
+  private fun batchWireSize(items: List<ByteArray>): Long =
+    BATCH_COUNT_SIZE.toLong() + items.sumOf { BATCH_ITEM_HEADER_SIZE.toLong() + it.size }
 
   private fun catchResponse(response: HttpResponse<String>): String {
     val statusCode = response.statusCode()
@@ -158,7 +180,8 @@ class AIServer(
   enum class ResponseCode(val httpCode: Int) {
     SUCCESS(200),
     BAD_REQUEST(400),
-    UNAUTHORIZED(403),
+    UNAUTHORIZED(HTTP_STATUS_UNAUTHORIZED),
+    FORBIDDEN(HTTP_STATUS_FORBIDDEN),
     NOT_FOUND(404),
     PAYLOAD_TOO_LARGE(413),
     CHUNK_SEQUENCE_MISMATCH(409),
@@ -166,8 +189,8 @@ class AIServer(
     RATE_LIMITED(429),
     SERVER_ERROR(500),
     SERVICE_UNAVAILABLE(503),
-    TIMEOUT(-1),
-    NETWORK_ERROR(-2),
+    TIMEOUT(TRANSPORT_TIMEOUT_STATUS),
+    NETWORK_ERROR(TRANSPORT_NETWORK_ERROR_STATUS),
     PARSE_ERROR(-3),
     WAITING(-5),
     UNKNOWN_ERROR(-4);
@@ -207,6 +230,8 @@ class AIServer(
 
     private const val BATCH_COUNT_SIZE = 2
     private const val BATCH_ITEM_HEADER_SIZE = 4
+    private const val BATCH_MAX_ITEM_BYTES = 2 * 1024 * 1024
+    private const val MAX_INFERENCE_BODY_BYTES = 2 * 1024 * 1024
     const val BATCH_MAX_ITEMS = 256
 
     internal fun validateServerUri(url: String): URI {

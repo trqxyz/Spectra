@@ -62,12 +62,12 @@ class AiCheckDuplicatePacketTest {
   }
 
   @Test
-  fun `duplicate flying packet enters ai tick sequence`() {
+  fun `duplicate flying packet does not enter ai tick sequence`() {
     val fixture = createFixture()
 
     fixture.check.onPacketReceive(fixture.event)
 
-    assertEquals(1, fixture.tickSequenceSize())
+    assertEquals(0, fixture.tickSequenceSize())
   }
 
   @Test
@@ -131,7 +131,6 @@ class AiCheckDuplicatePacketTest {
         debugManager = debugManager,
         scheduler = mockk<SchedulerService>(relaxed = true),
         decisionHistory = mockk(relaxed = true),
-        remoteConfigService = mockk(relaxed = true),
         reportService = mockk(relaxed = true),
       )
 

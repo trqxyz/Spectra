@@ -61,7 +61,20 @@ class AiCheckRidingExemptionTest {
   fun `player on foot is sent to inference`() {
     val fixture = createFixture(riding = false)
 
-    repeat(SEQUENCE) { fixture.check.onPacketReceive(fixture.event) }
+    sendMovements(fixture, SEQUENCE + 1)
+
+    verify(exactly = 1) { fixture.aiService.request(any(), any(), any()) }
+  }
+
+  @Test
+  fun `online player starts inference when transport becomes available after pairing`() {
+    val fixture = createFixture(riding = false, aiInitiallyEnabled = false)
+
+    sendMovements(fixture, SEQUENCE + 1)
+    verify(exactly = 0) { fixture.aiService.request(any(), any(), any()) }
+
+    fixture.aiEnabled[0] = true
+    sendMovements(fixture, SEQUENCE + 1)
 
     verify(exactly = 1) { fixture.aiService.request(any(), any(), any()) }
   }
@@ -70,26 +83,29 @@ class AiCheckRidingExemptionTest {
   fun `mount mid-window clears accumulated ticks`() {
     val fixture = createFixture(riding = false)
 
-    repeat(SEQUENCE - 1) { fixture.check.onPacketReceive(fixture.event) }
+    sendMovements(fixture, 1) // Initialize rotation state; this row is intentionally ignored.
+    sendMovements(fixture, SEQUENCE - 1)
     fixture.ridingHolder[0] = mockk(relaxed = true)
-    fixture.check.onPacketReceive(fixture.event)
+    sendMovements(fixture, 1)
     fixture.ridingHolder[0] = null
-    repeat(SEQUENCE - 1) { fixture.check.onPacketReceive(fixture.event) }
+    sendMovements(fixture, SEQUENCE - 1)
 
     verify(exactly = 0) { fixture.aiService.request(any(), any(), any()) }
 
-    fixture.check.onPacketReceive(fixture.event)
+    sendMovements(fixture, 1)
 
     verify(exactly = 1) { fixture.aiService.request(any(), any(), any()) }
   }
 
-  private fun createFixture(riding: Boolean): Fixture {
+  @Suppress("LongMethod")
+  private fun createFixture(riding: Boolean, aiInitiallyEnabled: Boolean = true): Fixture {
     val logger = mockk<Logger>(relaxed = true)
     val plugin = mockk<SpectraPlugin>(relaxed = true)
     every { plugin.logger } returns logger
 
     val aiService = mockk<AiService>(relaxed = true)
-    every { aiService.isEnabled } returns true
+    val aiEnabled = booleanArrayOf(aiInitiallyEnabled)
+    every { aiService.isEnabled } answers { aiEnabled[0] }
     every { aiService.request(any(), any(), any()) } returns CompletableFuture<AiResult>()
 
     val configManager = mockk<ConfigManager>(relaxed = true)
@@ -122,7 +138,8 @@ class AiCheckRidingExemptionTest {
     every { spectraPlayer.packetStateData } returns packetStateData
     every { spectraPlayer.checkManager } returns checkManager
     every { spectraPlayer.compensatedEntities } returns compensatedEntities
-    every { spectraPlayer.movement } returns MovementState()
+    val movement = MovementState()
+    every { spectraPlayer.movement } returns movement
     every { spectraPlayer.combat } returns CombatState(0)
 
     val scheduler = mockk<SchedulerService>(relaxed = true)
@@ -147,11 +164,17 @@ class AiCheckRidingExemptionTest {
         debugManager = DebugManager(plugin, configManager),
         scheduler = scheduler,
         decisionHistory = mockk(relaxed = true),
-        remoteConfigService = mockk(relaxed = true),
         reportService = mockk(relaxed = true),
       )
 
-    return Fixture(check, aiService, event, ridingHolder)
+    return Fixture(check, aiService, event, ridingHolder, aiEnabled, movement)
+  }
+
+  private fun sendMovements(fixture: Fixture, count: Int) {
+    repeat(count) {
+      fixture.movement.yaw += 1f
+      fixture.check.onPacketReceive(fixture.event)
+    }
   }
 
   private data class Fixture(
@@ -159,6 +182,8 @@ class AiCheckRidingExemptionTest {
     val aiService: AiService,
     val event: PacketReceiveEvent,
     val ridingHolder: Array<PacketEntity?>,
+    val aiEnabled: BooleanArray,
+    val movement: MovementState,
   )
 
   private companion object {

@@ -35,8 +35,10 @@ class SpectraPlugin : JavaPlugin() {
   override fun onLoad() {
     migrateLegacyDataFolder()
     packetEventsLoadFailure = runCatching { packetEventsLoader.load() }.exceptionOrNull()
-    runCatching { SpectraFlags.register(logger) }
-      .onFailure { logger.log(Level.WARNING, "Failed to register WorldGuard flags", it) }
+    if (server.pluginManager.getPlugin("WorldGuard") != null) {
+      runCatching { SpectraFlags.register(logger) }
+        .onFailure { logger.log(Level.WARNING, "Failed to register WorldGuard flags", it) }
+    }
   }
 
   private fun migrateLegacyDataFolder() {

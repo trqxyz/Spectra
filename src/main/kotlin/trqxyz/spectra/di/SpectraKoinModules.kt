@@ -82,7 +82,7 @@ import trqxyz.spectra.config.ConfigManager
 import trqxyz.spectra.config.LocaleManager
 import trqxyz.spectra.connect.ConnectService
 import trqxyz.spectra.connect.CredentialsStore
-import trqxyz.spectra.connect.RemoteConfigService
+import trqxyz.spectra.connect.ServerHeartbeatService
 import trqxyz.spectra.coroutines.SpectraCoroutines
 import trqxyz.spectra.damage.AiDamageProcessor
 import trqxyz.spectra.damage.DamageProcessor
@@ -136,7 +136,7 @@ private fun coreModule(plugin: SpectraPlugin) = module {
   singleOf(::CredentialsStore)
   singleOf(::ConfigManager)
   singleOf(::ConnectService)
-  singleOf(::RemoteConfigService)
+  singleOf(::ServerHeartbeatService)
   singleOf(::LocaleManager)
   singleOf(::DatabaseManager)
   singleOf(::OutboxHttpClient)
@@ -203,8 +203,8 @@ private fun coreModule(plugin: SpectraPlugin) = module {
       adventure = get(),
       coroutines = get(),
       scheduler = get(),
-      remoteConfigService = get(),
       reportMenu = get(),
+      serverHeartbeatService = get(),
     )
   }
 }
@@ -258,7 +258,7 @@ private fun checkModule() = module {
   single<CheckFactory>(named("action")) { CheckFactory { player -> ActionManager(player, get()) } }
   single<CheckFactory>(named("ai")) {
     CheckFactory { player ->
-      AiCheck(player, get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
+      AiCheck(player, get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
     }
   }
   single<CheckFactory>(named("collector")) {

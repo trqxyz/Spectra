@@ -11,11 +11,12 @@ package trqxyz.spectra.server
 
 import io.mockk.every
 import io.mockk.mockk
+import io.papermc.paper.plugin.configuration.PluginMeta
+import java.util.concurrent.ExecutionException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-import org.bukkit.plugin.PluginDescriptionFile
 import org.junit.jupiter.api.Test
 import trqxyz.spectra.SpectraPlugin
 import trqxyz.spectra.ai.AiRequestContext
@@ -23,11 +24,17 @@ import trqxyz.spectra.ai.AiRequestContext
 class AIServerRequestHeadersTest {
 
   @Test
+  fun `http authentication status codes retain their meanings`() {
+    assertEquals(AIServer.ResponseCode.UNAUTHORIZED, AIServer.ResponseCode.fromStatusCode(401))
+    assertEquals(AIServer.ResponseCode.FORBIDDEN, AIServer.ResponseCode.fromStatusCode(403))
+  }
+
+  @Test
   fun `request sends bearer and player stream identity headers`() {
     val plugin = mockk<SpectraPlugin>()
-    val description = mockk<PluginDescriptionFile>()
-    every { plugin.description } returns description
-    every { description.version } returns "test-version"
+    val pluginMeta = mockk<PluginMeta>()
+    every { plugin.pluginMeta } returns pluginMeta
+    every { pluginMeta.version } returns "test-version"
     val server =
       AIServer(plugin, "https://ai.example.test/v1/inference", API_KEY, ApiCooldown(1, 2, 2.0))
     val context =
@@ -61,6 +68,24 @@ class AIServerRequestHeadersTest {
     assertFailsWith<IllegalArgumentException> {
       AIServer.validateServerUri("https://user:secret@ai.example.test/v1/inference")
     }
+  }
+
+  @Test
+  fun `invalid batches fail as futures before any network request`() {
+    val plugin = mockk<SpectraPlugin>()
+    val pluginMeta = mockk<PluginMeta>()
+    every { plugin.pluginMeta } returns pluginMeta
+    every { pluginMeta.version } returns "test-version"
+    val server =
+      AIServer(plugin, "https://ai.example.test/v1/inference", API_KEY, ApiCooldown(1, 2, 2.0))
+
+    val error =
+      assertFailsWith<ExecutionException> {
+          server.sendBatch(List(AIServer.BATCH_MAX_ITEMS + 1) { byteArrayOf(1) }).get()
+        }
+        .cause as AIServer.RequestException
+
+    assertEquals(AIServer.ResponseCode.INVALID_SEQUENCE, error.code)
   }
 
   private companion object {

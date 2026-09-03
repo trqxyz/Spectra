@@ -76,7 +76,7 @@ class ConnectService(private val plugin: SpectraPlugin, private val configManage
       val (code, node) =
         post(
           "/api/v1/device/start",
-          mapOf("client_id" to CLIENT_ID, "plugin_version" to plugin.description.version),
+          mapOf("client_id" to CLIENT_ID, "plugin_version" to plugin.pluginMeta.version),
         ) ?: return StartResult.Error("Panel URL is not configured.")
       when (code) {
         HTTP_OK -> {
@@ -104,6 +104,11 @@ class ConnectService(private val plugin: SpectraPlugin, private val configManage
           }
         }
         TOO_MANY_REQUESTS -> StartResult.Error("Too many attempts. Please wait a few minutes.")
+        HTTP_METHOD_NOT_ALLOWED ->
+          StartResult.Error(
+            "Panel rejected the connect endpoint. Set connect.panel-url to the panel base URL, " +
+              "without /connect or /api/ paths."
+          )
         else -> StartResult.Error("Panel returned HTTP $code.")
       }
     } catch (e: Exception) {
@@ -185,13 +190,14 @@ class ConnectService(private val plugin: SpectraPlugin, private val configManage
     body: Map<String, Any?>,
     bearerToken: String? = null,
   ): Pair<Int, JsonNode>? {
-    val base = configManager.connectPanelUrl.trim().trimEnd('/')
-    if (base.isBlank()) return null
+    val configuredUrl = configManager.connectPanelUrl.trim()
+    if (configuredUrl.isBlank()) return null
+    val base = panelUri(configuredUrl).toString().trimEnd('/')
     val builder =
       HttpRequest.newBuilder(URI.create("$base$path"))
         .header("Content-Type", "application/json")
         .header("Accept", "application/json")
-        .header("User-Agent", "Spectra/" + plugin.description.version)
+        .header("User-Agent", "Spectra/" + plugin.pluginMeta.version)
         .timeout(REQUEST_TIMEOUT)
         .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(body)))
     bearerToken?.takeIf { it.isNotBlank() }?.let { builder.header("Authorization", "Bearer $it") }
@@ -207,6 +213,7 @@ class ConnectService(private val plugin: SpectraPlugin, private val configManage
   private companion object {
     const val CLIENT_ID = "spectra-plugin"
     const val HTTP_OK = 200
+    const val HTTP_METHOD_NOT_ALLOWED = 405
     const val TOO_MANY_REQUESTS = 429
     const val DEFAULT_EXPIRES = 600L
     const val DEFAULT_INTERVAL = 5L

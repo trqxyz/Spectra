@@ -25,7 +25,7 @@ import trqxyz.spectra.api.SpectraApi
 import trqxyz.spectra.command.CommandManager
 import trqxyz.spectra.config.ConfigManager
 import trqxyz.spectra.config.LocaleManager
-import trqxyz.spectra.connect.RemoteConfigService
+import trqxyz.spectra.connect.ServerHeartbeatService
 import trqxyz.spectra.coroutines.SpectraCoroutines
 import trqxyz.spectra.database.DatabaseManager
 import trqxyz.spectra.database.ViolationSyncService
@@ -71,8 +71,8 @@ constructor(
   private val adventure: BukkitAudiences,
   private val coroutines: SpectraCoroutines,
   private val scheduler: SchedulerService,
-  private val remoteConfigService: RemoteConfigService,
   private val reportMenu: ReportMenu,
+  private val serverHeartbeatService: ServerHeartbeatService,
 ) {
   fun enable() {
     commandManager.registerCommands()
@@ -88,28 +88,11 @@ constructor(
       plugin,
       ServicePriority.Normal,
     )
-    remoteConfigService.onApplied {
-      scheduler.runSync {
-        localeManager.reload()
-        debugManager.reload()
-        alertManager.reload()
-        aiServerProvider.reload()
-        playerDataManager.reloadAllPlayers()
-        monitorViewService.reload()
-      }
-      scheduler.runAsync {
-        redisManager.shutdown()
-        crossServerAlertService.shutdown()
-        crossServerSuspiciousService.shutdown()
-        crossServerAlertService.start()
-        crossServerSuspiciousService.start()
-      }
-    }
     violationSyncService.start()
+    serverHeartbeatService.start()
     relationCollector.start()
     relationSyncService.start()
     scheduler.runAsync {
-      remoteConfigService.refresh(true)
       crossServerAlertService.start()
       crossServerSuspiciousService.start()
     }
@@ -121,6 +104,7 @@ constructor(
     runCatching { relationCollector.stop() }
     runCatching { relationEventStore.flushAndStop() }
     runCatching { violationSyncService.stop() }
+    runCatching { serverHeartbeatService.stop() }
     runCatching { relationSyncService.stop() }
     runCatching { aiServerProvider.shutdownTransport() }
     runCatching { crossServerAlertService.shutdown() }
@@ -142,7 +126,6 @@ constructor(
     crossServerAlertService.shutdown()
     crossServerSuspiciousService.shutdown()
     scheduler.runAsync {
-      remoteConfigService.refresh(true)
       redisManager.shutdown()
       crossServerAlertService.start()
       crossServerSuspiciousService.start()

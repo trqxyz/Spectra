@@ -84,8 +84,12 @@ class AIServerProvider(
         null
       }
       ServerState.READY -> {
-        plugin.logger.info("[AiCheck] AI Check loaded.")
-        AIServer(plugin, url, key, apiCooldown!!)
+        runCatching { AIServer(plugin, url, key, apiCooldown!!) }
+          .onSuccess { plugin.logger.info("[AiCheck] AI Check loaded.") }
+          .onFailure { error ->
+            plugin.logger.warning("[AiCheck] AI disabled: invalid server URL (${error.message})")
+          }
+          .getOrNull()
       }
     }
   }

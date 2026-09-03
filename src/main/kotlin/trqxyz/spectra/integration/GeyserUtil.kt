@@ -60,8 +60,12 @@ object GeyserUtil {
       isGeyserBedrock(uuid) ||
       uuid.toString().startsWith(BEDROCK_UUID_PREFIX)
 
-  private fun isFloodgateBedrock(uuid: UUID): Boolean =
-    floodgatePresent && FloodgateApi.getInstance().isFloodgatePlayer(uuid)
+  private fun isFloodgateBedrock(uuid: UUID): Boolean {
+    if (!floodgatePresent) return false
+    // Floodgate is optional and can be reloaded independently.  A transient
+    // unavailable API must never escape into PacketEvents' packet thread.
+    return runCatching { FloodgateApi.getInstance().isFloodgatePlayer(uuid) }.getOrDefault(false)
+  }
 
   private fun isGeyserBedrock(uuid: UUID): Boolean {
     val api = geyserApi()

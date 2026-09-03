@@ -22,7 +22,6 @@
  */
 package trqxyz.spectra.config
 
-import com.fasterxml.jackson.databind.JsonNode
 import java.io.File
 import java.util.EnumSet
 import java.util.regex.Pattern
@@ -223,108 +222,6 @@ class ConfigManager(
     loadConfigs()
   }
 
-  @Synchronized
-  fun applyRemoteConfig(root: JsonNode): Boolean {
-    val bootstrapPanelUrl = connectPanelUrl
-    val remoteMain = root.path("config")
-    if (remoteMain.isObject) {
-      config = configView(remoteMain)
-      loadValues()
-      connectPanelUrl = bootstrapPanelUrl
-    }
-    if (root.path("punishments").isObject) {
-      punishments = configView(root.path("punishments"))
-    }
-    if (root.path("monitor").isObject) {
-      monitorConfig = configView(root.path("monitor"))
-    }
-
-    val ai = root.path("ai")
-    val reports = root.path("reports")
-    aiEnabled = ai.path("enabled").asBoolean(aiEnabled)
-    aiContinuous = ai.path("continuous").asBoolean(aiContinuous)
-    val models = ai.path("models").map { it.asText() }.joinToString(",")
-    if (models.isNotBlank()) aiModels = normalizeModels(models)
-    aiEnforcementMode =
-      when (ai.path("enforcement_mode").asText("shadow")) {
-        "enforce" -> AiEnforcementMode.ENFORCE
-        else -> AiEnforcementMode.SHADOW
-      }
-    val buffer = ai.path("buffer")
-    aiFlag = buffer.path("flag_threshold").asDouble(aiFlag).coerceIn(1.0, 2000.0)
-    aiResetOnFlag = if (buffer.path("reset_after_flag").asBoolean(true)) 0.0 else aiFlag
-    aiBufferMultiplier =
-      buffer.path("multiplier").asDouble(aiBufferMultiplier).coerceIn(0.01, 2000.0)
-    aiBufferDecrease = buffer.path("decrease").asDouble(aiBufferDecrease).coerceIn(0.0, 100.0)
-    val damage = ai.path("damage_reduction")
-    aiDamageReductionEnabled = damage.path("enabled").asBoolean(aiDamageReductionEnabled)
-    aiDamageReductionProb =
-      damage.path("probability").asDouble(aiDamageReductionProb).coerceIn(0.0, 1.0)
-    aiDamageReductionMultiplier =
-      damage.path("multiplier").asDouble(aiDamageReductionMultiplier).coerceIn(0.0, 1.0)
-    reportsEnabled = reports.path("enabled").asBoolean(reportsEnabled)
-    reportAiEnabled = reports.path("ai_enabled").asBoolean(reportAiEnabled)
-    reportCooldownMillis =
-      reports
-        .path("cooldown_seconds")
-        .asLong(reportCooldownMillis / MILLIS_PER_SEC)
-        .coerceIn(0L, 86400L) * MILLIS_PER_SEC
-    reportMaxOpenPerPlayer =
-      reports.path("max_open_per_player").asInt(reportMaxOpenPerPlayer).coerceIn(1, 100)
-    reportMaxStored = reports.path("max_stored").asInt(reportMaxStored).coerceIn(100, 100000)
-    reportNotifyStaff = reports.path("notify_staff").asBoolean(reportNotifyStaff)
-    reportMinReasonLength =
-      reports.path("min_reason_length").asInt(reportMinReasonLength).coerceIn(1, 80)
-    reportMaxReasonLength =
-      reports
-        .path("max_reason_length")
-        .asInt(reportMaxReasonLength)
-        .coerceIn(reportMinReasonLength, 500)
-    bedrockExemptEnabled = root.path("exemptions").path("bedrock").asBoolean(bedrockExemptEnabled)
-    historyEnabled = root.path("history").path("enabled").asBoolean(historyEnabled)
-    val relations = root.path("relations")
-    val relationSources = relations.path("sources")
-    relationsEnabled = relations.path("enabled").asBoolean(relationsEnabled)
-    relationsWorldGuardEnabled =
-      relationSources.path("worldguard").asBoolean(relationsWorldGuardEnabled)
-    relationsVaultEnabled = relationSources.path("vault").asBoolean(relationsVaultEnabled)
-    relationsContainersEnabled =
-      relationSources.path("containers").asBoolean(relationsContainersEnabled)
-    relationsItemsEnabled = relationSources.path("items").asBoolean(relationsItemsEnabled)
-    relationsBanStatusEnabled =
-      relationSources.path("ban_status").asBoolean(relationsBanStatusEnabled)
-    relationsIpAddressesEnabled =
-      relationSources.path("ip_addresses").asBoolean(relationsIpAddressesEnabled)
-    relationsBanProvider =
-      relations.path("ban_provider").asText(relationsBanProvider).lowercase().takeIf {
-        it in BAN_PROVIDERS
-      } ?: "none"
-    return true
-  }
-
-  private fun configView(node: JsonNode): ConfigView {
-    val root = CommentedConfigurationNode.root()
-    root.raw(configValue(node))
-    return ConfigView(root)
-  }
-
-  private fun configValue(node: JsonNode): Any? {
-    return when {
-      node.isObject -> {
-        val values = LinkedHashMap<String, Any?>()
-        node.fields().forEachRemaining { entry -> values[entry.key] = configValue(entry.value) }
-        values
-      }
-      node.isArray -> node.map(::configValue)
-      node.isBoolean -> node.booleanValue()
-      node.isIntegralNumber -> node.longValue()
-      node.isFloatingPointNumber -> node.doubleValue()
-      node.isTextual -> node.textValue()
-      node.isNull -> null
-      else -> node.asText()
-    }
-  }
-
   fun isAiEnabled(): Boolean = aiEnabled
 
   fun isAiEnforcementEnabled(): Boolean = aiEnforcementMode == AiEnforcementMode.ENFORCE
@@ -438,7 +335,17 @@ class ConfigManager(
         }
       }
 
-    connectPanelUrl = config.getString("connect.panel-url", "https://panel.kaelus.dev")
+    val configuredPanelUrl = config.getString("connect.panel-url", DEFAULT_PANEL_URL)
+    connectPanelUrl =
+      if (configuredPanelUrl == LEGACY_PANEL_URL) {
+        plugin.logger.warning(
+          "[Config] Replacing legacy panel.kaelus.dev default with $DEFAULT_PANEL_URL. " +
+            "Set connect.panel-url only when your backend is remote."
+        )
+        DEFAULT_PANEL_URL
+      } else {
+        configuredPanelUrl
+      }
     aiContinuous = config.getBoolean("ai.continuous", false)
 
     aiFlag = config.getDouble("ai.buffer.flag", 50.0)
@@ -596,6 +503,8 @@ class ConfigManager(
   private companion object {
     val BAN_PROVIDERS = setOf("none", "vanilla", "litebans")
     const val STREAM_WINDOW = 40
+    const val DEFAULT_PANEL_URL = "http://127.0.0.1:8000"
+    const val LEGACY_PANEL_URL = "https://panel.kaelus.dev"
 
     const val MILLIS_PER_SEC = 1000L
     const val MILLIS_PER_HOUR = 3_600_000L

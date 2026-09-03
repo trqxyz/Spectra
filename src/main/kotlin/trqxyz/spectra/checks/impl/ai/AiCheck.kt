@@ -39,7 +39,6 @@ import trqxyz.spectra.checks.CheckFactory
 import trqxyz.spectra.checks.Reloadable
 import trqxyz.spectra.checks.type.PacketCheck
 import trqxyz.spectra.config.ConfigManager
-import trqxyz.spectra.connect.RemoteConfigService
 import trqxyz.spectra.damage.DamageProcessor
 import trqxyz.spectra.data.AiRotationState
 import trqxyz.spectra.data.TickData
@@ -55,6 +54,7 @@ import trqxyz.spectra.utils.Message
 import trqxyz.spectra.utils.MessageUtil
 
 @CheckData(name = "AI (Aim)")
+@Suppress("LongParameterList")
 class AiCheck(
   spectraPlayer: SpectraPlayer,
   private val plugin: SpectraPlugin,
@@ -66,11 +66,9 @@ class AiCheck(
   private val debugManager: DebugManager,
   private val scheduler: SchedulerService,
   private val decisionHistory: AiDecisionHistory,
-  private val remoteConfigService: RemoteConfigService,
   private val reportService: ReportService,
 ) : AbstractCheck(spectraPlayer), PacketCheck, Reloadable {
   private var step: Int = 0
-  private var aiEnabled = false
   private var ticks: ArrayDeque<TickData> = ArrayDeque()
   private val snapshotBuffer: AtomicReference<Array<TickData?>?> = AtomicReference()
   private var requestTail: CompletableFuture<Void> = CompletableFuture.completedFuture(null)
@@ -110,8 +108,6 @@ class AiCheck(
   }
 
   override fun reload() {
-    aiEnabled = aiService.isEnabled
-
     if (ticks.isEmpty() || ticks.size != configManager.aiSequence) {
       ticks = ArrayDeque(configManager.aiSequence)
     }
@@ -125,10 +121,9 @@ class AiCheck(
   }
 
   override fun onPacketReceive(event: PacketReceiveEvent) {
-    if (!aiEnabled || !configManager.isAiEnabled()) return
-    if (!WrapperPlayClientPlayerFlying.isFlying(event.packetType)) return
-    val spectraPlayer = spectraPlayer
+    if (shouldIgnorePacket(event)) return
 
+    val spectraPlayer = spectraPlayer
     val sequence = configManager.aiSequence
 
     if (spectraPlayer.compensatedEntities.self.riding != null) {
@@ -149,6 +144,10 @@ class AiCheck(
     ) {
       return
     }
+
+    // The first rotation-state sample and stationary flying packets contain eight zeroes.
+    // They are not complete aim observations and must not count towards a model window.
+    if (!tick.isInformative) return
 
     if (!configManager.aiContinuous && spectraPlayer.combat.ticksSinceAttack > sequence) {
       if (ticks.isNotEmpty()) {
@@ -171,6 +170,17 @@ class AiCheck(
     }
   }
 
+  private fun shouldIgnorePacket(event: PacketReceiveEvent): Boolean {
+    // The transport can become available after an online player has already
+    // joined (device pairing). Do not cache this state at check construction.
+    // 1.17+ may produce a duplicate flying packet for one logical client tick.
+    // Counting it would duplicate features in both the 40-tick request and the server stream.
+    return !aiService.isEnabled ||
+      !configManager.isAiEnabled() ||
+      !WrapperPlayClientPlayerFlying.isFlying(event.packetType) ||
+      spectraPlayer.packetStateData.lastPacketWasOnePointSeventeenDuplicate
+  }
+
   private fun trySendWindow() {
     if (
       configManager.isAiWorldGuardEnabled() &&
@@ -186,7 +196,9 @@ class AiCheck(
   }
 
   private fun sendData() {
-    if (ticks.isEmpty() || !aiEnabled || !configManager.isAiEnabled()) {
+    if (
+      ticks.size != configManager.aiSequence || !aiService.isEnabled || !configManager.isAiEnabled()
+    ) {
       return
     }
 
@@ -205,7 +217,6 @@ class AiCheck(
         .thenComposeAsync(
           {
             try {
-              remoteConfigService.refreshIfDue()
               @Suppress("UNCHECKED_CAST") val requestTicks = snapshot as Array<TickData>
               if (resetStream) {
                 requestStream = PlayerRequestStream(spectraPlayer.uuid.toString())
