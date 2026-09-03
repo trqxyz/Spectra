@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,6 @@ class SpectraPlugin : JavaPlugin() {
   }
 
   private fun migrateLegacyDataFolder() {
-    // Preserve existing installations while the plugin identity is renamed.
     val legacy = File(dataFolder.parentFile, "SlothAC")
     if (!dataFolder.exists() && legacy.isDirectory) {
       legacy.copyRecursively(dataFolder, overwrite = false)

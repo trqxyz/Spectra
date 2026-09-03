@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,28 +17,19 @@
  */
 package trqxyz.spectra.api.event
 
-/** Functional listener for [SpectraEventBus] subscriptions. */
 fun interface SpectraEventListener<T : SpectraEvent> {
   fun handle(event: T)
 }
 
-/**
- * Lightweight event bus for SpectraPlugin events.
- *
- * Events are dispatched on the thread that calls [post].
- */
 interface SpectraEventBus {
-  /** Post an event to all registered listeners. */
   fun post(event: SpectraEvent)
 
-  /** Subscribe with default priority (0) and ignoreCancelled=false. */
   fun <T : SpectraEvent> subscribe(
     pluginContext: Any,
     eventType: Class<T>,
     listener: SpectraEventListener<T>,
   )
 
-  /** Subscribe with explicit priority and ignoreCancelled. */
   fun <T : SpectraEvent> subscribe(
     pluginContext: Any,
     eventType: Class<T>,
@@ -47,9 +38,7 @@ interface SpectraEventBus {
     ignoreCancelled: Boolean,
   )
 
-  /** Unregister a specific listener for a context. */
   fun unregisterListener(pluginContext: Any, listener: SpectraEventListener<*>)
 
-  /** Unregister all listeners for a context. */
   fun unregisterAll(pluginContext: Any)
 }

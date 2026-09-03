@@ -1,2 +1,13 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# The Gradle wrapper script is executed by Linux CI runners: it must stay LF.
+gradlew text eol=lf
+*.sh text eol=lf
+# Windows launcher stays CRLF.
+gradlew.bat text eol=crlf
+
+# Never line-ending-convert binaries.
+*.jar binary
+*.pt binary
+*.onnx binary

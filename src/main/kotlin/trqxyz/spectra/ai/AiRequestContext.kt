@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,13 +20,6 @@ package trqxyz.spectra.ai
 import java.util.UUID
 import java.util.concurrent.atomic.AtomicLong
 
-/**
- * Per-request player context. [playerUuid], [streamId] and [chunkSequence] identify an ordered
- * in-game session. A batch must not mix player streams (see BatchingAiTransport).
- *
- * The stream identity is deliberately built from Bukkit's UUID only. Network addresses and player
- * names are never used as an inference identity.
- */
 data class AiRequestContext(
   val playerName: String?,
   val models: String?,
@@ -38,11 +31,6 @@ data class AiRequestContext(
     get() = playerUuid != null || streamId != null
 }
 
-/**
- * Request identity for one in-game player session. A new [PlayerRequestStream] is created with each
- * [trqxyz.spectra.checks.impl.ai.AiCheck], so reconnecting produces a fresh stream id while retries
- * retain the same request context and chunk sequence.
- */
 class PlayerRequestStream(
   private val playerUuid: String,
   val streamId: String = UUID.randomUUID().toString(),

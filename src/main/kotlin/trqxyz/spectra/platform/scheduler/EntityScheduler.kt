@@ -23,7 +23,6 @@ package trqxyz.spectra.platform.scheduler
 import org.bukkit.entity.Entity
 import org.bukkit.plugin.Plugin
 
-/** Represents a scheduler for executing entity tasks. */
 interface EntityScheduler {
   fun execute(entity: Entity, plugin: Plugin, run: Runnable, retired: Runnable?, delay: Long)
 

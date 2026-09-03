@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ class AiCheckRidingExemptionTest {
   fun `mount mid-window clears accumulated ticks`() {
     val fixture = createFixture(riding = false)
 
-    sendMovements(fixture, 1) // Initialize rotation state; this row is intentionally ignored.
+    sendMovements(fixture, 1)
     sendMovements(fixture, SEQUENCE - 1)
     fixture.ridingHolder[0] = mockk(relaxed = true)
     sendMovements(fixture, 1)

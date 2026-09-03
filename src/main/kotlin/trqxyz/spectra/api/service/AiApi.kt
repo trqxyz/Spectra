@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,20 +22,11 @@ import java.util.UUID
 import org.bukkit.entity.Player
 import trqxyz.spectra.api.model.AiSnapshot
 
-/** Access to AI status and the latest prediction snapshot per player. */
 interface AiApi {
-  /** Returns true when AI integration is enabled. */
   fun isEnabled(): Boolean
 
-  /**
-   * Latest AI snapshot for a player, if available.
-   *
-   * @param playerId player UUID
-   * @return snapshot with probability/buffer/dmg/prob90
-   */
   fun getSnapshot(playerId: UUID): Optional<AiSnapshot>
 
-  /** Convenience overload for Bukkit [Player]. */
   fun getSnapshot(player: Player?): Optional<AiSnapshot> {
     if (player == null) {
       return Optional.empty()

@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,8 +43,6 @@ class JacksonAiResponseParser : AiResponseParser {
     val fields = node.fields()
     while (fields.hasNext()) {
       val (name, value) = fields.next()
-      // Pending/unavailable tiers intentionally have no score until their window is complete.
-      // They are metadata, not decisions, and must not invalidate ready tiers in the same response.
       val unscoredStatus =
         if (value.isObject && !hasScore(value)) readText(value.get("status"))?.lowercase() else null
       if (unscoredStatus != null && unscoredStatus != AIModelDecision.STATUS_READY) {
@@ -71,9 +69,6 @@ class JacksonAiResponseParser : AiResponseParser {
         ?: readNumber(node.get("probability"))
         ?: throw IllegalArgumentException("$label does not contain a valid probability")
     val calibratedProbability = requireUnit(probability, "$label calibrated_probability")
-    // Older endpoints occasionally return a mixture of modern-looking fields
-    // and a raw probability.  It has neither calibration/OOD provenance nor a
-    // trustworthy acceptance decision, so preserve the score for display only.
     if (!hasCompleteContract(node)) {
       return AIModelDecision.legacy(calibratedProbability)
     }
@@ -114,9 +109,6 @@ class JacksonAiResponseParser : AiResponseParser {
     val modelVersion = readText(node.get("model_version")) ?: "legacy"
     val windowTicks = readInteger(node.get("window_ticks"), "$label window_ticks") ?: 0
     if (windowTicks < 0) throw IllegalArgumentException("$label window_ticks must be non-negative")
-    // The server's shadow policy is authoritative. Missing this explicit field
-    // on an old otherwise-complete response is safe: it remains observable,
-    // but the plugin cannot turn it into a punishment.
     val actionable = accepted && (readBoolean(node.get("actionable"), "$label actionable") ?: false)
 
     return AIModelDecision(

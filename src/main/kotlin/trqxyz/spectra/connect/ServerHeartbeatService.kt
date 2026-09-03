@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 package trqxyz.spectra.connect

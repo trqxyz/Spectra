@@ -42,7 +42,6 @@ interface Sender {
 
   val isPlayer: Boolean
 
-  /** Real console/RCON only, not command blocks. Use for security gates, not [isConsole]. */
   val isTrustedConsole: Boolean
 
   val nativeSender: CommandSender

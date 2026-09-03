@@ -31,14 +31,13 @@ object SpectraMath {
 
     var a = aInput
     var b = bInput
-    // Make sure a is larger than b
     if (a < b) {
       val temp = a
       a = b
       b = temp
     }
 
-    while (b > MINIMUM_DIVISOR) { // Minimum minecraft sensitivity
+    while (b > MINIMUM_DIVISOR) {
       val temp = a - (floor(a / b) * b)
       a = b
       b = temp

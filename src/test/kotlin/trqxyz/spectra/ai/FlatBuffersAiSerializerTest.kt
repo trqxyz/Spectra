@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -115,7 +115,6 @@ class FlatBuffersAiSerializerTest {
     val tick2 = mockTick(TickParams(dYaw = 30.0f))
     val ticks = arrayOf(tick0, tick1, tick2)
 
-    // Only serialize first 2 even though array has 3
     val sequence = decodeV2(serializer.serialize(ticks, 2))
     assertEquals(2, sequence.count)
     assertEquals(10.0f, sequence.values[0][0])

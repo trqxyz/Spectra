@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -222,7 +222,6 @@ class ConfigMigrationsTest {
     )
     runMigration(userFile)
     val merged = userFile.readText()
-    // The user's `continuous: true` must survive the merge, not be replaced with template default.
     assertContains(merged, "continuous: true")
     assertFalse(merged.contains("continuous: false"))
   }

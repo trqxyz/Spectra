@@ -24,7 +24,6 @@ import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.plugin.Plugin
 
-/** Represents a scheduler for executing region tasks. */
 interface RegionScheduler {
   fun execute(plugin: Plugin, world: World, chunkX: Int, chunkZ: Int, task: Runnable)
 

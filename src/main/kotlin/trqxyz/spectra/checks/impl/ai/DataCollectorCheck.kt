@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,8 +36,6 @@ class DataCollectorCheck(
   private val plugin: SpectraPlugin,
   private val configManager: ConfigManager,
 ) : AbstractCheck(spectraPlayer), PacketCheck {
-  // Same canonical feature computer as inference, so any data collected here
-  // matches the SlothPanel collector and the models.
   private val rotationState = AiRotationState()
 
   interface Factory : CheckFactory {

@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,6 @@ class DataCollectorCheckTest {
   fun `only complete non-zero rotation sample enters data collection`() {
     val fixture = createFixture()
 
-    // The first packet only initializes rotation state and produces an all-zero feature row.
     fixture.check.onPacketReceive(fixture.event)
     fixture.check.onPacketReceive(fixture.event)
 

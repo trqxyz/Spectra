@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,8 +111,6 @@ class AIServer(
     if (batch) {
       builder.header("X-Batch", "1")
     }
-    // Per-player streaming is keyed only by Bukkit UUID + session stream id.
-    // X-Player-Name is display-only and is never used for server-side identity.
     context?.playerName?.let { builder.header("X-Player-Name", it) }
     context?.models?.takeIf { it.isNotBlank() }?.let { builder.header("X-Models", it) }
     context?.playerUuid?.takeIf { it.isNotBlank() }?.let { builder.header("X-Player-UUID", it) }

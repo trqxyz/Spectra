@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,7 @@ class ImmediateTaskHandle private constructor(private val sync: Boolean) : TaskH
 
   override fun isCancelled(): Boolean = false
 
-  override fun cancel() {
-    // no-op
-  }
+  override fun cancel() = Unit
 
   companion object {
     @JvmStatic fun sync(): ImmediateTaskHandle = ImmediateTaskHandle(true)

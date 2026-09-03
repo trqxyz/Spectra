@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,8 @@
  */
 package trqxyz.spectra.api.event
 
-/** Base marker for Spectra events posted through [SpectraEventBus]. */
 interface SpectraEvent
 
-/** Marker for events that can be cancelled by listeners. */
 interface SpectraCancellableEvent : SpectraEvent {
   var cancelled: Boolean
 }

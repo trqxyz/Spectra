@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,6 @@ class FlatBuffersAiSerializer : AiSerializer {
     val builder = BUILDER.get()
     builder.clear()
 
-    // FlatBuffers writes backwards. Each TickData v2 struct is eight inline
-    // float32 values, and the vector is therefore one contiguous memory range.
     builder.startVector(TICK_STRUCT_BYTES, count, Float.SIZE_BYTES)
     for (i in count - 1 downTo 0) {
       val tick = ticks[i]

@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ class CrossServerSuspiciousServiceTest {
 
     val service = service(enabledYaml, redis, scheduler, playerData)
     service.start()
-    refresh.captured.run() // one refresh cycle
+    refresh.captured.run()
 
     assertTrue(service.isActive)
     assertEquals(1, keys.size, "only the player with buffer > 0 should be published")

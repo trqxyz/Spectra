@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +24,11 @@ import kotlinx.collections.immutable.persistentListOf
 import org.bukkit.entity.Player
 import trqxyz.spectra.api.model.CheckInfo
 
-/** Access to per-player check list and metadata. */
 interface CheckApi {
-  /** Returns all checks created for a player. */
   fun listChecks(playerId: UUID): ImmutableList<CheckInfo>
 
-  /** Returns a check by name or configName for a player. */
   fun getCheck(playerId: UUID, checkName: String): Optional<CheckInfo>
 
-  /** Convenience overload for Bukkit [Player]. */
   fun listChecks(player: Player?): ImmutableList<CheckInfo> {
     if (player == null) {
       return persistentListOf()

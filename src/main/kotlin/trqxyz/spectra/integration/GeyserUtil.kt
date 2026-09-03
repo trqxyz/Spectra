@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * This file contains code derived from GrimAC.
  * The original authors of GrimAC are credited below.
@@ -62,8 +62,6 @@ object GeyserUtil {
 
   private fun isFloodgateBedrock(uuid: UUID): Boolean {
     if (!floodgatePresent) return false
-    // Floodgate is optional and can be reloaded independently.  A transient
-    // unavailable API must never escape into PacketEvents' packet thread.
     return runCatching { FloodgateApi.getInstance().isFloodgatePlayer(uuid) }.getOrDefault(false)
   }
 

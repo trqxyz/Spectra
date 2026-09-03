@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,9 +129,6 @@ class ConnectService(private val plugin: SpectraPlugin, private val configManage
 
   internal fun parsePollResult(code: Int, node: JsonNode): PollResult {
     if (code == HTTP_OK && node.path("status").asText("") == "approved") {
-      // New control-plane responses call this api_key; accept secret_key while
-      // older panels are still deployed. The command consumes either value once
-      // and stops polling before persisting credentials.yml.
       val secret = node.path("api_key").asText("").ifBlank { node.path("secret_key").asText("") }
       if (secret.isBlank()) {
         return PollResult.Error("Panel approved but returned no key.")

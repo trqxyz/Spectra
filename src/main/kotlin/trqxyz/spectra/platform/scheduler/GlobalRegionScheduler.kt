@@ -22,7 +22,6 @@ package trqxyz.spectra.platform.scheduler
 
 import org.bukkit.plugin.Plugin
 
-/** Represents a scheduler for executing global region tasks. */
 interface GlobalRegionScheduler {
   fun execute(plugin: Plugin, task: Runnable)
 

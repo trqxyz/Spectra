@@ -2,12 +2,6 @@ package trqxyz.spectra.connect
 
 import java.net.URI
 
-/**
- * Validates the configured control-panel endpoint before any credential is sent.
- *
- * HTTP is permitted only for a local development panel. In particular, a redirect must not turn a
- * configured HTTPS panel into a request that exposes the server credential to another origin.
- */
 internal fun panelUri(configuredUrl: String): URI {
   val uri = URI.create(configuredUrl.trim())
   val scheme = uri.scheme?.lowercase()

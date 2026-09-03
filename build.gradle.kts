@@ -27,20 +27,18 @@ repositories {
   maven("https://repo.papermc.io/repository/maven-public/")
   maven("https://repo.codemc.io/repository/maven-releases/")
   maven("https://repo.codemc.io/repository/maven-snapshots/")
-  maven("https://maven.enginehub.org/repo/") // WorldGuard
-  maven("https://repo.extendedclip.com/content/repositories/placeholderapi/") // PlaceholderAPI
-  maven("https://repo.opencollab.dev/maven-snapshots/") // Geyser / Floodgate
+  maven("https://maven.enginehub.org/repo/")
+  maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+  maven("https://repo.opencollab.dev/maven-snapshots/")
 }
 
 dependencies {
-  // Bukkit APIs
   compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
   compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.15")
   compileOnly("me.clip:placeholderapi:2.12.2")
   compileOnly("org.geysermc.floodgate:api:2.0-SNAPSHOT")
   compileOnly("litebans:api:0.6.1")
 
-  // PacketEvents
   if (BuildConfig.shadePE) {
     implementation(packetEventsSpigot)
   } else {
@@ -48,19 +46,16 @@ dependencies {
   }
   implementation("org.bstats:bstats-bukkit:3.2.1")
 
-  // Cloud Command Framework
   implementation("org.incendo:cloud-paper:2.0.0-beta.14")
   implementation("org.incendo:cloud-processors-requirements:1.0.0-rc.1")
   implementation("org.incendo:cloud-kotlin-extensions:2.0.0")
   implementation("org.incendo:cloud-kotlin-coroutines:2.0.0")
 
-  // Adventure & MiniMessage
   implementation("net.kyori:adventure-platform-bukkit:4.4.1")
   implementation("net.kyori:adventure-text-minimessage:4.26.1")
   implementation("net.kyori:adventure-text-serializer-plain:4.26.1")
   implementation("net.kyori:adventure-text-serializer-gson:4.26.1")
 
-  // HikariCP
   implementation("com.zaxxer:HikariCP:7.0.2")
   implementation("org.slf4j:slf4j-jdk14:2.0.17")
   implementation("org.jetbrains.exposed:exposed-core:1.1.1")
@@ -71,12 +66,9 @@ dependencies {
   implementation("org.mariadb.jdbc:mariadb-java-client:3.5.7")
   implementation("com.fasterxml.jackson.core:jackson-databind:2.21.2")
 
-  // Redis (cross-server alerts). Netty stays unbundled and unrelocated: PacketEvents reflects on
-  // the server's io.netty Channel type, so Lettuce must share the server's Netty.
   implementation("io.lettuce:lettuce-core:6.5.0.RELEASE") { exclude(group = "io.netty") }
   compileOnly("io.netty:netty-handler:4.1.113.Final")
 
-  // Utilities
   implementation(kotlin("stdlib"))
   implementation("it.unimi.dsi:fastutil:8.5.15")
   implementation("org.jetbrains:annotations:26.1.0")
@@ -87,7 +79,6 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
   implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0")
 
-  // Testing
   testImplementation(kotlin("test"))
   testImplementation(packetEventsSpigot)
   testImplementation("org.junit.jupiter:junit-jupiter:6.0.3")

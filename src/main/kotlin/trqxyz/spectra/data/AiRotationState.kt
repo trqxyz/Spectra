@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,6 @@ import kotlin.math.floor
 import kotlin.math.min
 import kotlin.math.pow
 
-/**
- * Per-player AI feature computer, ported 1:1 from the training data collector's RotationState.
- * CRITICAL: this must stay byte-for-byte equivalent to the SlothPanel collector, otherwise
- * inference features drift from training features and legit players false-flag near 100% (notably:
- * yaw delta is WRAPPED to [-180,180], which the raw movement pipeline does not do).
- */
 class AiRotationState {
   private val xRotMode = RunningMode(TOTAL_SAMPLES_THRESHOLD)
   private val yRotMode = RunningMode(TOTAL_SAMPLES_THRESHOLD)
@@ -190,8 +184,6 @@ class AiRotationState {
     private const val SIGNIFICANT_SAMPLES_THRESHOLD = 15
     private const val TOTAL_SAMPLES_THRESHOLD = 80
 
-    // Matches the collector's Math.pow(0.2F, 3.0) * 8.0 * 0.15 - 1e-3 exactly
-    // (0.2F promoted to double, not the double literal 0.2).
     private val MINIMUM_DIVISOR = 0.2f.toDouble().pow(3.0) * 8.0 * 0.15 - 1e-3
   }
 }

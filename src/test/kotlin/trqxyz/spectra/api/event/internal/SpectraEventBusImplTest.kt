@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,6 @@ class SpectraEventBusImplTest {
     bus = SpectraEventBusImpl()
   }
 
-  // --- Test event types ---
-
   private class SimpleEvent : SpectraEvent
 
   private open class ParentEvent : SpectraEvent
@@ -46,8 +44,6 @@ class SpectraEventBusImplTest {
   private class CancellableTestEvent : SpectraCancellableEvent {
     override var cancelled: Boolean = false
   }
-
-  // --- Basic dispatch ---
 
   @Test
   fun `post delivers event to subscriber`() {
@@ -73,8 +69,6 @@ class SpectraEventBusImplTest {
     bus.post(SimpleEvent())
     assertEquals(3, count)
   }
-
-  // --- Priority ordering ---
 
   @Test
   fun `higher priority listeners execute first`() {
@@ -127,8 +121,6 @@ class SpectraEventBusImplTest {
     bus.post(SimpleEvent())
     assertEquals(2, count)
   }
-
-  // --- Cancellable events ---
 
   @Test
   fun `cancelled event skips non-ignoreCancelled listeners`() {
@@ -184,8 +176,6 @@ class SpectraEventBusImplTest {
     assertEquals(listOf("canceller", "monitor"), received)
   }
 
-  // --- Hierarchy dispatch ---
-
   @Test
   fun `child event dispatched to parent subscriber`() {
     var parentReceived = false
@@ -205,8 +195,6 @@ class SpectraEventBusImplTest {
     assertTrue(received.contains("child"))
     assertTrue(received.contains("parent"))
   }
-
-  // --- Unregister ---
 
   @Test
   fun `unregisterListener removes specific listener`() {
@@ -235,15 +223,13 @@ class SpectraEventBusImplTest {
 
     bus.unregisterAll(ctx1)
     bus.post(SimpleEvent())
-    assertEquals(3, count) // only ctx2 listener fires
+    assertEquals(3, count)
   }
 
   @Test
   fun `unregisterAll with unknown context does not throw`() {
     bus.unregisterAll(Any())
   }
-
-  // --- Error isolation ---
 
   @Test
   fun `listener exception does not prevent other listeners from running`() {

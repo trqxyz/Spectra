@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,5 @@ package trqxyz.spectra.ai
 import trqxyz.spectra.data.TickData
 
 interface AiSerializer {
-  /**
-   * Returns an owned payload. Callers treat the array as immutable, allowing retries and the HTTP
-   * publisher to reuse it without transport-layer copies.
-   */
   fun serialize(ticks: Array<TickData>, count: Int): ByteArray
 }

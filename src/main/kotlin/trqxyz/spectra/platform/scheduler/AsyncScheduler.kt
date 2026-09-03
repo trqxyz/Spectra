@@ -23,7 +23,6 @@ package trqxyz.spectra.platform.scheduler
 import java.util.concurrent.TimeUnit
 import org.bukkit.plugin.Plugin
 
-/** Represents a scheduler for executing tasks asynchronously. */
 interface AsyncScheduler {
   fun runNow(plugin: Plugin, task: Runnable): TaskHandle
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,8 +62,6 @@ class WorldGuardManager(private val logger: Logger, private val configManager: C
 
       queryFlag(set) ?: matchLegacyDisabledList(player, set)
     } catch (error: IllegalStateException) {
-      // This method is reached from packet processing.  An optional plugin
-      // reload must not propagate into PacketEvents and destabilize the server.
       logLookupFailure(error)
       false
     }

@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * This file contains code derived from GrimAC.
  * The original authors of GrimAC are credited below.
@@ -24,7 +24,6 @@ package trqxyz.spectra.platform.scheduler
 
 import java.util.concurrent.TimeUnit
 
-/** Cross-platform scheduler abstraction for Bukkit/Paper/Folia. */
 interface PlatformScheduler {
   val asyncScheduler: AsyncScheduler
 

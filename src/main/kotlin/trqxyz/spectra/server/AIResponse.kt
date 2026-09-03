@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
  */
 package trqxyz.spectra.server
 
-/** One model's complete decision contract. */
 data class AIModelDecision(
   val status: String,
   val riskScore: Double,
@@ -28,7 +27,6 @@ data class AIModelDecision(
   val novelty: Double,
   val modelVersion: String,
   val windowTicks: Int,
-  /** True only when the backend has explicitly allowed an accepted result to act. */
   val actionable: Boolean = false,
   val legacy: Boolean = false,
 ) {
@@ -41,7 +39,6 @@ data class AIModelDecision(
   val isAcceptedLegit: Boolean
     get() = accepted && verdict.equals(VERDICT_LEGIT, ignoreCase = true)
 
-  /** Backend policy gate in addition to the model's own accepted verdict. */
   val isActionableCheat: Boolean
     get() = actionable && isAcceptedCheat
 
@@ -52,11 +49,6 @@ data class AIModelDecision(
     const val VERDICT_LEGIT = "legit"
     const val VERDICT_UNKNOWN = "unknown"
 
-    /**
-     * Preserve a display score from an old probability-only server, but never turn it into evidence
-     * for an action. The modern contract carries the calibration, OOD and explicit acceptance
-     * decision needed for enforcement.
-     */
     fun legacy(probability: Double): AIModelDecision {
       return AIModelDecision(
         status = "unavailable",
@@ -75,11 +67,6 @@ data class AIModelDecision(
   }
 }
 
-/**
- * The primary decision is retained for single-model/legacy servers. [models] contains independent
- * decisions for every tier; callers must gate actions per model and may only aggregate their score
- * for display.
- */
 data class AIResponse(
   val primary: AIModelDecision,
   val models: Map<String, AIModelDecision> = emptyMap(),

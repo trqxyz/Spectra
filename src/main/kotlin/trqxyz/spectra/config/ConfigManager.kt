@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * This file contains code derived from GrimAC.
  * The original authors of GrimAC are credited below.
@@ -65,9 +65,6 @@ class ConfigManager(
   val aiStep: Int
     get() = STREAM_WINDOW
 
-  // Comma-separated models the server should run (sent as the X-Models header).
-  // The plugin streams a fixed short, non-overlapping window and the server
-  // buffers per player, so models no longer map to a client-side tick count.
   var aiModels: String = "flash,pro,night"
     private set
 

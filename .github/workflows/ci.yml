@@ -1,0 +1,123 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (Java ${{ matrix.java }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ 17, 21 ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ matrix.java }} and 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |
+            21
+            ${{ matrix.java }}
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      - name: Check code style
+        run: ./gradlew spotlessCheck
+
+      - name: Run Detekt
+        run: ./gradlew detekt
+
+      - name: Run tests
+        run: ./gradlew test
+
+      - name: Run container-backed tests
+        if: matrix.java == 21
+        run: ./gradlew --no-daemon containerTest
+
+      - name: Build shadow JAR
+        run: ./gradlew shadowJar
+
+      - name: Resolve shadow JAR path
+        id: jar
+        run: echo "path=$(./gradlew -q printShadowJarPath)" >> "$GITHUB_OUTPUT"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Spectra-java${{ matrix.java }}
+          path: ${{ steps.jar.outputs.path }}
+          if-no-files-found: error
+
+  release:
+    name: Release
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      - name: Build both JAR variants
+        id: assets
+        run: |
+          set -euo pipefail
+          version="$(./gradlew -q properties | awk '/^version:/ {print $2}')"
+          ./gradlew shadowJar
+          shaded="$(./gradlew -q printShadowJarPath)"
+          ./gradlew shadowJar -PshadePE=false
+          unbundled="$(./gradlew -q printShadowJarPath -PshadePE=false)"
+          mkdir -p release
+          cp "$shaded"    "release/Spectra-${version}-java17.jar"
+          cp "$unbundled" "release/Spectra-${version}-java17-unbundled.jar"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          ls -l release
+
+      - name: Read commit message
+        id: commit
+        run: |
+          set -euo pipefail
+          echo "subject=$(git log -1 --pretty=%s)" >> "$GITHUB_OUTPUT"
+          {
+            echo 'body<<SPECTRA_EOF'
+            git log -1 --pretty=%B
+            echo 'SPECTRA_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.assets.outputs.version }}-${{ github.run_number }}
+          name: ${{ steps.commit.outputs.subject }}
+          body: ${{ steps.commit.outputs.body }}
+          files: release/*.jar

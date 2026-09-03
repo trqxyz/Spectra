@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,6 @@ enum class Message(val path: String) {
   RELOAD_START("reload-start"),
   RELOAD_SUCCESS("reload-success"),
   STORAGE_DEGRADED("storage.degraded"),
-
-  // Connect (device-link to the web panel)
   CONNECT_DISABLED("connect.disabled"),
   CONNECT_CONSOLE_ONLY("connect.console-only"),
   CONNECT_INSECURE_URL("connect.insecure-url"),
@@ -51,14 +49,10 @@ enum class Message(val path: String) {
   CONNECT_STATUS_KEY("connect.status-key"),
   CONNECT_STATUS_SERVER_URL("connect.status-server-url"),
   CONNECT_STATUS_NOT_LINKED("connect.status-not-linked"),
-
-  // Brand
   BRAND_ALERTS_ENABLED("brand.alerts-enabled"),
   BRAND_ALERTS_DISABLED("brand.alerts-disabled"),
   BRAND_NOTIFICATION("brand.notification"),
   BRAND_DISCONNECT_FORGE("brand.disconnect-forge"),
-
-  // DataCollect
   DATACOLLECT_DETAILS_REQUIRED("datacollect.details-required"),
   DATACOLLECT_INVALID_TYPE("datacollect.invalid-type"),
   DATACOLLECT_START_SUCCESS("datacollect.start-success"),
@@ -70,8 +64,6 @@ enum class Message(val path: String) {
   DATACOLLECT_STATUS_PLAYER("datacollect.status-player"),
   DATACOLLECT_STATUS_NONE("datacollect.status-none"),
   DATACOLLECT_STATUS_NO_SESSION("datacollect.status-no-session"),
-
-  // Monitor
   MONITOR_ENABLED("monitor.enabled"),
   MONITOR_DISABLED("monitor.disabled"),
   MONITOR_NO_DATA("monitor.no-data"),
@@ -86,26 +78,16 @@ enum class Message(val path: String) {
   MONITOR_LIST_EMPTY("monitor.list-empty"),
   VIEW_ENABLED("view.enabled"),
   VIEW_DISABLED("view.disabled"),
-
-  // Profile
   PROFILE_NO_DATA("profile.no-data"),
   PROFILE_LINES("profile.lines"),
-
-  // History
   HISTORY_DISABLED("history.disabled"),
   HISTORY_HEADER("history.header"),
   HISTORY_ENTRY("history.entry"),
   HISTORY_NO_VIOLATIONS("history.no-violations"),
-
-  // Logs
   LOGS_HEADER("logs.header"),
   LOGS_ENTRY("logs.entry"),
   LOGS_NO_VIOLATIONS("logs.no-violations"),
-
-  // Punish
   PUNISH_RESET_SUCCESS("punish.reset-success"),
-
-  // Exempt
   EXEMPT_INVALID_DURATION("exempt.invalid-duration"),
   EXEMPT_SUCCESS_PERM("exempt.success-perm"),
   EXEMPT_SUCCESS_TEMP("exempt.success-temp"),
@@ -116,8 +98,6 @@ enum class Message(val path: String) {
   EXEMPT_STATUS_NOT_EXEMPT("exempt.status-not-exempt"),
   EXEMPT_STATUS_EXPIRED("exempt.status-expired"),
   EXEMPT_STATUS_TEMP("exempt.status-temp"),
-
-  // Suspicious
   SUSPICIOUS_ALERTS_ENABLED("suspicious.alerts-enabled"),
   SUSPICIOUS_ALERTS_DISABLED("suspicious.alerts-disabled"),
   SUSPICIOUS_ALERT_TRIGGERED("suspicious.alert-triggered"),
@@ -131,12 +111,8 @@ enum class Message(val path: String) {
   SUSPICIOUS_TOP_NONE("suspicious.top-none"),
   SUSPICIOUS_TOP_PLAYER("suspicious.top-player"),
   SUSPICIOUS_TOP_PLAYER_HOVER("suspicious.top-player-hover"),
-
-  // Cross-server
   CROSS_SERVER_ALERT_PREFIX("cross-server.alert-prefix"),
   CROSS_SERVER_SERVER_TAG("cross-server.server-tag"),
-
-  // Stats
   STATS_INVALID_PERIOD("stats.invalid-period"),
   STATS_HEADER("stats.header"),
   STATS_FLAGS("stats.flags"),
@@ -166,14 +142,8 @@ enum class Message(val path: String) {
   DECISIONS_HEADER("decisions.header"),
   DECISIONS_ENTRY("decisions.entry"),
   DECISIONS_EMPTY("decisions.empty"),
-
-  // Help
   HELP_MESSAGE("help"),
-
-  // Internal
   INTERNAL_ERROR("internal.error"),
-
-  // Time formats
   TIME_AGO("time.ago"),
   TIME_DAYS("time.days"),
   TIME_HOURS("time.hours"),

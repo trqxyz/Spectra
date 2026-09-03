@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,8 +89,6 @@ class AiCheck(
 
   var prob90: Int = 0
 
-  // Canonical AI feature computer, byte-identical to the training data collector
-  // (wrapped yaw delta etc.). Updated continuously so features never drift.
   private val rotationState = AiRotationState()
 
   private var flag = 0.0
@@ -127,15 +125,11 @@ class AiCheck(
     val sequence = configManager.aiSequence
 
     if (spectraPlayer.compensatedEntities.self.riding != null) {
-      // Vehicle rotation is not the player's aim; the collector skips it too, so
-      // do not advance the feature state here.
       ticks.clear()
       ticksStep = 0
       return
     }
 
-    // Advance the wrapped feature state on every rotation (matching the collector)
-    // so deltas/accel/mode stay consistent across combat gaps.
     val tick = rotationState.update(spectraPlayer.movement.yaw, spectraPlayer.movement.pitch)
 
     if (
@@ -145,8 +139,6 @@ class AiCheck(
       return
     }
 
-    // The first rotation-state sample and stationary flying packets contain eight zeroes.
-    // They are not complete aim observations and must not count towards a model window.
     if (!tick.isInformative) return
 
     if (!configManager.aiContinuous && spectraPlayer.combat.ticksSinceAttack > sequence) {
@@ -171,10 +163,6 @@ class AiCheck(
   }
 
   private fun shouldIgnorePacket(event: PacketReceiveEvent): Boolean {
-    // The transport can become available after an online player has already
-    // joined (device pairing). Do not cache this state at check construction.
-    // 1.17+ may produce a duplicate flying packet for one logical client tick.
-    // Counting it would duplicate features in both the 40-tick request and the server stream.
     return !aiService.isEnabled ||
       !configManager.isAiEnabled() ||
       !WrapperPlayClientPlayerFlying.isFlying(event.packetType) ||
@@ -261,8 +249,6 @@ class AiCheck(
     if (pendingRequests.incrementAndGet() <= maxPending) return true
 
     pendingRequests.decrementAndGet()
-    // A dropped window creates a gap. The next admitted window starts a new
-    // stream instead of pretending it is consecutive with older chunks.
     resetStreamOnNextRequest.set(true)
     debugManager.log(
       DebugCategory.AI_API_SERVICE_UNAVAILABLE,

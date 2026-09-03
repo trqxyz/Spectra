@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,8 +46,6 @@ class BatchingAiTransport(
 
   @Suppress("ReturnCount")
   override fun send(payload: ByteArray, context: AiRequestContext?): CompletableFuture<String> {
-    // A batch mixes payloads from many players, so it cannot carry one player's
-    // UUID/stream/sequence identity. Send player streams individually.
     if (context?.isPlayerStream == true) {
       return singleTransport.send(payload, context)
     }

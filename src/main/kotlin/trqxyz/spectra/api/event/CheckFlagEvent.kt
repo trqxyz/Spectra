@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,6 @@ package trqxyz.spectra.api.event
 
 import java.util.UUID
 
-/**
- * Fired when a check flags a player.
- *
- * This event is dispatched on the calling thread.
- */
 data class CheckFlagEvent(
   val playerId: UUID,
   val playerName: String,

@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * This file contains code derived from GrimAC.
  * The original authors of GrimAC are credited below.
@@ -23,28 +23,9 @@
 package trqxyz.spectra.utils.latency
 
 interface ILatencyUtils {
-  /**
-   * Adds a task to be executed when the corresponding transaction ACK is received.
-   *
-   * @param transaction The transaction ID this task is associated with.
-   * @param runnable The task to execute.
-   */
   fun addRealTimeTask(transaction: Int, runnable: Runnable)
 
-  /**
-   * Adds a task to be executed asynchronously via the player's event loop when the corresponding
-   * transaction ACK is received. (Note: Benchmark might simplify/ignore the async part unless
-   * specifically testing event loop contention)
-   *
-   * @param transaction The transaction ID this task is associated with.
-   * @param runnable The task to execute.
-   */
   fun addRealTimeTaskAsync(transaction: Int, runnable: Runnable)
 
-  /**
-   * Processes received transaction ACKs and runs associated tasks.
-   *
-   * @param receivedTransactionId The ID of the transaction ACK received from the client.
-   */
   fun handleNettySyncTransaction(receivedTransactionId: Int)
 }

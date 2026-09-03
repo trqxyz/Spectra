@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,7 +101,6 @@ class AIServerProvider(
   }
 
   private companion object {
-    // Old config.yml placeholder URL - treat as not-configured.
     const val LEGACY_PLACEHOLDER_URL = "https://url/v1/inference"
   }
 

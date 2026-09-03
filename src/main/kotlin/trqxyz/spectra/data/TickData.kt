@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,6 @@ package trqxyz.spectra.data
 
 import kotlin.math.roundToLong
 
-/**
- * One movement sample = the 8 aim channels the AI consumes. These are produced by [AiRotationState]
- * with EXACTLY the same maths as the training data collector (wrapped yaw delta,
- * |delta|-|lastDelta| accel, gcd-mode error), so inference features match training features.
- */
 class TickData(
   val deltaYaw: Float,
   val deltaPitch: Float,
@@ -34,7 +29,6 @@ class TickData(
   val gcdErrorYaw: Float,
   val gcdErrorPitch: Float,
 ) {
-  /** True when this sample contains an actual rotation-derived feature. */
   val isInformative: Boolean
     get() =
       deltaYaw != 0f ||

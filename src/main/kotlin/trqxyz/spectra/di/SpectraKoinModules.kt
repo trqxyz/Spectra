@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -176,8 +176,6 @@ private fun coreModule(plugin: SpectraPlugin) = module {
   singleOf(::PacketListener)
   singleOf(::DamageEvent)
 
-  // Koin's constructor DSL supports at most 22 parameters. Keep this provider
-  // explicit so adding lifecycle collaborators cannot make compilation fail.
   single {
     SpectraCore(
       plugin = get(),

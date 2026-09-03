@@ -1,6 +1,6 @@
 /*
  * This file is part of Spectra - https://github.com/trqxyz/ai_server
- * Copyright (C) 2026 KaelusAI
+ * Copyright (C) 2026 SpectraAI
  *
  * Spectra is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,21 +29,16 @@ internal object ConfigMigrations {
     return VERSION_RE.find(text)?.groupValues?.get(1)?.toIntOrNull() ?: 0
   }
 
-  // yaml-config-updater uses `/` as the path separator because `.` is valid inside key names.
-  @Suppress("MagicNumber") // the literals are config-version thresholds
+  @Suppress("MagicNumber")
   fun forcedDropsForUpgradeFrom(currentVersion: Int): List<String> {
     if (currentVersion >= LATEST_VERSION) return emptyList()
     val drops = mutableListOf("config-version")
-    // v4: model selection replaces manual tick counts (ai.sequence / ai.step).
     if (currentVersion < 4) drops += listOf("ai/sequence", "ai/step")
-    // v5: multi-model streaming (ai.models) replaces the single ai.model.
     if (currentVersion < 5) drops += "ai/model"
     if (currentVersion < 7) {
       drops += "ai/stream-window"
       drops += "ignore-duplicate-packet-rotation"
     }
-    // ai/continuous is deliberately never force-dropped: collection follows
-    // combat, and deleting the key would silently re-enable idle capture.
     return drops
   }
 }
